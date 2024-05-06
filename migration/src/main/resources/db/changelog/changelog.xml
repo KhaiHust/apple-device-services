@@ -8,5 +8,8 @@
     <changeSet id="000002_create_table_products.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000002_create_table_products.up.sql"/>
     </changeSet>
+    <changeSet id="000003_create_table_product_details_table.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000003_create_table_product_details_table.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>
