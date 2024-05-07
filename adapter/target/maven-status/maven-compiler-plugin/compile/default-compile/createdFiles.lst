@@ -1,0 +1,5 @@
+vn\edu\hust\soict\project\adapter\repository\mysql\model\BaseModel.class
+vn\edu\hust\soict\project\adapter\mapper\ColorModelMapper.class
+vn\edu\hust\soict\project\adapter\repository\mysql\model\ColorModel.class
+vn\edu\hust\soict\project\adapter\repository\mysql\ColorRepository.class
+vn\edu\hust\soict\project\adapter\repository\ColorAdapter.class

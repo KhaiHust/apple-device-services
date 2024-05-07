@@ -1,0 +1,9 @@
+vn\edu\hust\soict\project\core\exception\ApplicationException.class
+vn\edu\hust\soict\project\core\entity\BaseEntity.class
+vn\edu\hust\soict\project\core\exception\GlobalExceptionHandler.class
+vn\edu\hust\soict\project\core\constant\ErrorCodes.class
+vn\edu\hust\soict\project\core\entity\ProductEntity.class
+vn\edu\hust\soict\project\core\entity\BaseEntity$BaseEntityBuilder.class
+vn\edu\hust\soict\project\core\entity\ColorEntity.class
+vn\edu\hust\soict\project\core\port\ColorPort.class
+vn\edu\hust\soict\project\core\entity\response\Resource.class

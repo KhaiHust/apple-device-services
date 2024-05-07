@@ -8,10 +8,10 @@
 		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>vn.edu.hust.soict</groupId>
-	<artifactId>project</artifactId>
+	<groupId>vn.edu.hust.soict.project</groupId>
+	<artifactId>public</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>project</name>
+	<name>public</name>
 	<description>Backend Project II</description>
 	<properties>
 		<java.version>17</java.version>
