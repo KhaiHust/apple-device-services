@@ -26,7 +26,7 @@ CREATE TABLE `storages` (
 ) ENGINE=InnoDB CHARSET=utf8;
 
 CREATE TABLE `colors` (
-                          `id` int PRIMARY KEY,
+                          `id` int PRIMARY KEY AUTO_INCREMENT,
                           `name` varchar(50) NOT NULL,
                           `code` varchar(20) NOT NULL UNIQUE,
                           `description` text,
