@@ -16,14 +16,14 @@ public class ColorAdapter implements IColorPort {
 
     @Override
     public ColorEntity save(ColorEntity colorEntity) {
-        try {
+//        try {
             var colorModel = colorRepository.save(ColorModelMapper.INSTANCE.toModel(colorEntity));
 
             return ColorModelMapper.INSTANCE.toEntity(colorModel);
-        }
-        catch (Exception ex){
-            throw new ApplicationException(ex.getMessage());
-        }
+//        }
+//        catch (Exception ex){
+//            throw new ApplicationException(ex.getMessage());
+//        }
 
     }
 }

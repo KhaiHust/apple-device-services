@@ -20,7 +20,7 @@ CREATE TABLE `image_details` (
 CREATE TABLE `storages` (
                             `id` int PRIMARY KEY AUTO_INCREMENT,
                             `volumne` int,
-                            `unit` int,
+                            `unit` varchar(50),
                             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB CHARSET=utf8;
