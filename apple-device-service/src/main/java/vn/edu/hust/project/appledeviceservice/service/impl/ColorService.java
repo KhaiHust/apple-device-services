@@ -13,7 +13,7 @@ public class ColorService implements IColorService {
 
     private final CreateColorUseCase createColorUseCase;
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ColorEntity createColorEntity(ColorEntity colorEntity) {
         return createColorUseCase.createColor(colorEntity);
     }

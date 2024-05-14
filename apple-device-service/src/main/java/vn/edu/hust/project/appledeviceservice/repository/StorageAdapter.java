@@ -14,7 +14,7 @@ public class StorageAdapter implements IStoragePort {
     private final IStorageRepository storageRepository;
 
     @Override
-    public StorageEntity createStorage(StorageEntity storageEntity) {
+    public StorageEntity save(StorageEntity storageEntity) {
         return StorageModelMapper.INSTANCE.toStorageEntity(
                 storageRepository.save(StorageModelMapper.INSTANCE.toStorageModel(storageEntity))
         );

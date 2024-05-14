@@ -11,6 +11,6 @@ public class CreateStorageUseCase {
     private final IStoragePort storagePort;
 
     public StorageEntity createStorage(StorageEntity storageEntity){
-        return storagePort.createStorage(storageEntity);
+        return storagePort.save(storageEntity);
     }
 }

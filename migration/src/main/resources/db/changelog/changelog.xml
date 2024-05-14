@@ -11,5 +11,8 @@
     <changeSet id="000003_create_table_product_details_table.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000003_create_table_product_details_table.up.sql"/>
     </changeSet>
+    <changeSet id="000004_create_table_types.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000004_create_table_types.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>
