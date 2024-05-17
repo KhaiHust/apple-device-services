@@ -10,7 +10,11 @@ public enum ErrorCodes {
 
     CREATE_STORAGE_FAIL(400002L, "Create storage fail"),
 
-    CREATE_TYPE_FAIL(400003L, "Create type fail");
+    CREATE_TYPE_FAIL(400003L, "Create type fail"),
+
+    CREATE_IMAGE_FAIL(400004L, "Create image fail"),
+
+    CREATE_PRODUCT_FAIL(400005L, "Create product fail");
 
     private final Long code;
     private final String message;

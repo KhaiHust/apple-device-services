@@ -1,21 +1,17 @@
-package vn.edu.hust.project.appledeviceservice.enitity;
+package vn.edu.hust.project.appledeviceservice.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ProductEntity extends BaseEntity{
+public class CreateProductRequest {
 
     private String name;
 
@@ -23,15 +19,15 @@ public class ProductEntity extends BaseEntity{
 
     private String description;
 
+    private List<String> descriptionImages;
+
+    private List<String> images;
+
     private String bannerImg;
 
     private String status;
 
-    private String warrantyDuration;
+    private Long warrantyDuration;
 
     private Long typeId;
-
-    private List<ImageEntity> descriptionImages;
-
-    private List<ImageEntity> images;
 }

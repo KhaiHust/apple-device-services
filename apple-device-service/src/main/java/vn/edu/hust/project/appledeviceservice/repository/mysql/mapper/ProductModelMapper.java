@@ -12,5 +12,5 @@ public abstract class ProductModelMapper {
 
     public abstract ProductModel toModel(ProductEntity entity);
 
-    public abstract ProductModel toEntity(ProductModel model);
+    public abstract ProductEntity toEntity(ProductModel model);
 }

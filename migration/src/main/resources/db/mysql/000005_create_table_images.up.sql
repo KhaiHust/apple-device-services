@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXIST `images`
+CREATE TABLE images
 (
     `id`        int PRIMARY KEY AUTO_INCREMENT,
     `entity_id` int          NOT NULL,
