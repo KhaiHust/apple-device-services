@@ -17,5 +17,8 @@
     <changeSet id="000005_create_table_description_images.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000005_create_table_images.up.sql"/>
     </changeSet>
+    <changeSet id="000006_add_column_banner_img_product_details.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000006_add_column_banner_img_name_product_details.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>
