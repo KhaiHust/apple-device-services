@@ -11,6 +11,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<Resource> handleApplicationException(ApplicationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new Resource(ex.getCode(), ex.getMessage(), null));
+                .body(new Resource(ex.getCode(), ex.getMessage()));
     }
 }

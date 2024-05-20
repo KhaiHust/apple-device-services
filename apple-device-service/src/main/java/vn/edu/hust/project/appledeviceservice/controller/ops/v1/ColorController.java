@@ -12,7 +12,7 @@ import vn.edu.hust.project.appledeviceservice.mapper.ColorResourceMapper;
 import vn.edu.hust.project.appledeviceservice.service.IColorService;
 
 @RestController
-@RequestMapping("/ops/v1/colors")
+@RequestMapping("/ops/api/v1/colors")
 @RequiredArgsConstructor
 public class ColorController {
     public static final String COLOR_PREFIX_API = "/ops/v1/colors";
@@ -26,6 +26,7 @@ public class ColorController {
         var color = colorService.createColorEntity(ColorResourceMapper.INSTANCE.toEntity(request));
         return ResponseEntity.ok(new Resource(color));
     }
+
 
 
 }

@@ -11,7 +11,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.response.Resource;
 import vn.edu.hust.project.appledeviceservice.service.IProductService;
 
 @RestController
-@RequestMapping("/ops/v1/products")
+@RequestMapping("/ops/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
 

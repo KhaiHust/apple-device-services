@@ -12,7 +12,7 @@ import vn.edu.hust.project.appledeviceservice.mapper.TypeResourceMapper;
 import vn.edu.hust.project.appledeviceservice.service.ITypeService;
 
 @RestController
-@RequestMapping("/ops/v1/types")
+@RequestMapping("/ops/api/v1/types")
 @RequiredArgsConstructor
 public class TypeController {
 

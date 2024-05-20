@@ -9,3 +9,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+app:
+  service:
+    cors:
+      baseUrl: http://localhost:3000
+      allowedMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE

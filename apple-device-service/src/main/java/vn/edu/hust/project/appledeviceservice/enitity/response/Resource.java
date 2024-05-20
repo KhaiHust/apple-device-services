@@ -12,14 +12,17 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @Setter
 public class Resource {
-    private Long code;
-    private String message;
-    private Object data;
 
+    private Object data;
+    private Object meta;
     public Resource(Object data) {
-        this.code = (long) HttpStatus.OK.value();
-        this.message = "Success";
+        this.meta = new MetaResource((long) HttpStatus.OK.value(), "Success");
         this.data = data;
+    }
+
+    public Resource(Long code, String message){
+        this.meta = new MetaResource(code, message);
+        this.data = null;
     }
 
 }

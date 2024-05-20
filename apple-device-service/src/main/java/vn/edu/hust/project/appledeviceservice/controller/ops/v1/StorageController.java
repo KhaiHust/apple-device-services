@@ -13,7 +13,7 @@ import vn.edu.hust.project.appledeviceservice.service.IStorageService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ops/v1/storages")
+@RequestMapping("/ops/api/v1/storages")
 public class StorageController {
     private final IStorageService storageService;
 
