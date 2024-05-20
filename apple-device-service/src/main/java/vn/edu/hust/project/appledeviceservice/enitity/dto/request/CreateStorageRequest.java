@@ -1,4 +1,4 @@
-package vn.edu.hust.project.appledeviceservice.dto.request;
+package vn.edu.hust.project.appledeviceservice.enitity.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -1,11 +1,10 @@
-package vn.edu.hust.project.appledeviceservice.enitity.response;
+package vn.edu.hust.project.appledeviceservice.enitity.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 @AllArgsConstructor
 @NoArgsConstructor

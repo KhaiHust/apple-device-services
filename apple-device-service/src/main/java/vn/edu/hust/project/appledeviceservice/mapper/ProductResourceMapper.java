@@ -3,7 +3,7 @@ package vn.edu.hust.project.appledeviceservice.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import vn.edu.hust.project.appledeviceservice.dto.request.CreateProductRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateProductRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
 
 @Mapper

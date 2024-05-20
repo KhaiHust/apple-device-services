@@ -1,4 +1,4 @@
-package vn.edu.hust.project.appledeviceservice.enitity.response;
+package vn.edu.hust.project.appledeviceservice.enitity.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

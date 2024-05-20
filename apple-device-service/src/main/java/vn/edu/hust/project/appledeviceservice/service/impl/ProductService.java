@@ -2,7 +2,7 @@ package vn.edu.hust.project.appledeviceservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vn.edu.hust.project.appledeviceservice.dto.request.CreateProductRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateProductRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
 import vn.edu.hust.project.appledeviceservice.service.IProductService;
 import vn.edu.hust.project.appledeviceservice.usecase.CreateProductUseCase;

@@ -1,4 +1,4 @@
-package vn.edu.hust.project.appledeviceservice.dto.request;
+package vn.edu.hust.project.appledeviceservice.enitity.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;

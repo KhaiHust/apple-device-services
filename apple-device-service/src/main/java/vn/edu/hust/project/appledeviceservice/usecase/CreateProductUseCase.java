@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import vn.edu.hust.project.appledeviceservice.constant.ImageTypeEnum;
-import vn.edu.hust.project.appledeviceservice.dto.request.CreateProductRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateProductRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.ImageEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
 import vn.edu.hust.project.appledeviceservice.mapper.ProductResourceMapper;
@@ -14,7 +14,6 @@ import vn.edu.hust.project.appledeviceservice.port.IProductPort;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

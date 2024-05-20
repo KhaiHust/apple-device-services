@@ -1,4 +1,4 @@
-package vn.edu.hust.project.appledeviceservice.enitity.response;
+package vn.edu.hust.project.appledeviceservice.enitity.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
