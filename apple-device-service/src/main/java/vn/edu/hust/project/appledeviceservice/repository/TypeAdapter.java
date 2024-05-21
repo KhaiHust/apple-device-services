@@ -16,6 +16,7 @@ import vn.edu.hust.project.appledeviceservice.repository.mysql.ITypeRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.TypeModelMapper;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.model.TypeModel;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.specification.TypeSpecification;
+import vn.edu.hust.project.appledeviceservice.utils.PageInfoUtils;
 
 import java.util.List;
 
@@ -40,16 +41,7 @@ public class TypeAdapter implements ITypePort {
                 Sort.by("id").descending());
         Page<TypeModel> result = typeRepository.findAll(new TypeSpecification(filter), pageable);
 
-        var pageInfo = new PageInfo();
-        pageInfo.setTotalRecord(result.getTotalElements());
-        pageInfo.setTotalPage((long) result.getTotalPages());
-        if (result.hasNext()) {
-            pageInfo.setNextPage((long) result.nextPageable().getPageNumber());
-        }
-
-        if (result.hasPrevious()) {
-            pageInfo.setPreviousPage((long) result.previousPageable().getPageNumber());
-        }
+        var pageInfo = PageInfoUtils.getPageInfoUtils(result);
         return Pair.of(pageInfo, TypeModelMapper.INSTANCE.toEntityList(result.getContent()));
     }
 
