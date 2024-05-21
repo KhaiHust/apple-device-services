@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +56,14 @@ public class TypeController {
         var resource = new Resource(result.getSecond(), metaData);
 
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Resource> getById(
+            @PathVariable(name = "id") Long id
+    ) {
+        return ResponseEntity.ok(
+                new Resource(typeService.getTypeById(id))
+        );
     }
 }

@@ -14,7 +14,9 @@ public enum ErrorCodes {
 
     CREATE_IMAGE_FAIL(400004L, "Create image fail"),
 
-    CREATE_PRODUCT_FAIL(400005L, "Create product fail");
+    CREATE_PRODUCT_FAIL(400005L, "Create product fail"),
+
+    GET_TYPE_NOT_FOUND(400006L, "Get type not found");
 
     private final Long code;
     private final String message;

@@ -18,4 +18,8 @@ public class GetTypeUseCase {
     public Pair<PageInfo, List<TypeEntity>> getAllTypes(GetTypeRequest filter){
         return typePort.getAllTypes(filter);
     }
+
+    public TypeEntity getTypeById(Long id){
+        return typePort.getTypeById(id);
+    }
 }

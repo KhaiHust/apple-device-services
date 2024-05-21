@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.TypeEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetTypeRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
+import vn.edu.hust.project.appledeviceservice.exception.GetTypeException;
 import vn.edu.hust.project.appledeviceservice.port.ITypePort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.ITypeRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.TypeModelMapper;
@@ -50,5 +51,16 @@ public class TypeAdapter implements ITypePort {
             pageInfo.setPreviousPage((long) result.previousPageable().getPageNumber());
         }
         return Pair.of(pageInfo, TypeModelMapper.INSTANCE.toEntityList(result.getContent()));
+    }
+
+    @Override
+    public TypeEntity getTypeById(Long id) {
+        var type = typeRepository.findById(id);
+        if (type.isPresent()) {
+            return TypeModelMapper.INSTANCE.toEntity(type.get());
+        }
+
+        throw new GetTypeException();
+
     }
 }

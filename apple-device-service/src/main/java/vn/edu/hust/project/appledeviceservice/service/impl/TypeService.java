@@ -31,4 +31,9 @@ public class TypeService implements ITypeService {
     public Pair<PageInfo, List<TypeEntity>> getAllTypes(GetTypeRequest filter) {
         return getTypeUseCase.getAllTypes(filter);
     }
+
+    @Override
+    public TypeEntity getTypeById(Long id) {
+        return getTypeUseCase.getTypeById(id);
+    }
 }

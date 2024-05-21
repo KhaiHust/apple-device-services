@@ -11,4 +11,6 @@ public interface ITypePort {
     TypeEntity save(TypeEntity entity);
 
     Pair<PageInfo, List<TypeEntity>> getAllTypes(GetTypeRequest filter);
+
+    TypeEntity getTypeById(Long id);
 }
