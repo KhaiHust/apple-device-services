@@ -18,4 +18,9 @@ public class GetColorUseCase {
     public Pair<PageInfo, List<ColorEntity>> getAllColors(GetColorRequest filter){
         return colorPort.getAllColors(filter);
     }
+
+    public ColorEntity getColorById(Long id){
+        return colorPort.getColorById(id);
+    }
+
 }

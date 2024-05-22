@@ -11,4 +11,6 @@ public interface IColorPort {
     ColorEntity save(ColorEntity colorEntity);
 
     Pair<PageInfo, List<ColorEntity>> getAllColors(GetColorRequest filter);
+
+    ColorEntity getColorById(Long id);
 }

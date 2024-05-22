@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,13 @@ public class ColorController {
         var resource = new Resource(result.getSecond(), metaData);
 
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/{color_id}")
+    public ResponseEntity<Resource> getColorDetail(
+            @PathVariable(name = "color_id") Long colorId
+    ){
+        return ResponseEntity.ok(new Resource(colorService.getColorById(colorId)));
     }
 
 

@@ -30,4 +30,9 @@ public class ColorService implements IColorService {
     public Pair<PageInfo, List<ColorEntity>> getAllColors(GetColorRequest filter) {
         return getColorUseCase.getAllColors(filter);
     }
+
+    @Override
+    public ColorEntity getColorById(Long id) {
+        return getColorUseCase.getColorById(id);
+    }
 }

@@ -16,7 +16,11 @@ public enum ErrorCodes {
 
     CREATE_PRODUCT_FAIL(400005L, "Create product fail"),
 
-    GET_TYPE_NOT_FOUND(400006L, "Get type not found");
+    GET_TYPE_NOT_FOUND(400006L, "Get type not found"),
+
+    GET_COLOR_NOT_FOUND(400007L, "Get color not found"),
+
+    GET_STORAGE_NOT_FOUND(40000L, "Get storage not found");
 
     private final Long code;
     private final String message;

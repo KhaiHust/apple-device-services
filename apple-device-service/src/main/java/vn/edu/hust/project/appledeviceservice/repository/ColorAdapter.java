@@ -12,6 +12,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.ColorEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetColorRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.exception.CreateColorException;
+import vn.edu.hust.project.appledeviceservice.exception.GetColorException;
 import vn.edu.hust.project.appledeviceservice.port.IColorPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IColorRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.ColorModelMapper;
@@ -53,6 +54,15 @@ public class ColorAdapter implements IColorPort {
         );
         var pageInfo = PageInfoUtils.getPageInfoUtils(result);
         return Pair.of(pageInfo, ColorModelMapper.INSTANCE.toEntities(result.getContent()));
+    }
+
+    @Override
+    public ColorEntity getColorById(Long id) {
+        var model = colorRepository.findById(id);
+        if(model.isPresent()){
+            return ColorModelMapper.INSTANCE.toEntity(model.get());
+        }
+        throw new GetColorException();
     }
 
 }
