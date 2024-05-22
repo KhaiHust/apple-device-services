@@ -20,7 +20,9 @@ public enum ErrorCodes {
 
     GET_COLOR_NOT_FOUND(400007L, "Get color not found"),
 
-    GET_STORAGE_NOT_FOUND(40000L, "Get storage not found");
+    GET_STORAGE_NOT_FOUND(400008L, "Get storage not found"),
+
+    CREATE_PRODUCT_DETAIL_NOT_FOUND(400009L, "Create product detail fail");
 
     private final Long code;
     private final String message;

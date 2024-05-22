@@ -18,6 +18,9 @@ public class ProductDetailModel extends BaseModel{
     @Column(name = "name")
     private String name;
 
+    @Column(name = "banner_img")
+    private String bannerImg;
+
     @Column(name = "product_id")
     private Long productId;
 
