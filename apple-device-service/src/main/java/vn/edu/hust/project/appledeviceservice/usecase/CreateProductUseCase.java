@@ -11,6 +11,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
 import vn.edu.hust.project.appledeviceservice.mapper.ProductResourceMapper;
 import vn.edu.hust.project.appledeviceservice.port.IImagePort;
 import vn.edu.hust.project.appledeviceservice.port.IProductPort;
+import vn.edu.hust.project.appledeviceservice.utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +33,13 @@ public class CreateProductUseCase {
 
         ArrayList<ImageEntity> productImages = null;
         if (!CollectionUtils.isEmpty(request.getImages())){
-            productImages = saveImages(request.getImages(), ImageTypeEnum.PRODUCT_IMAGE, productID);
+            productImages = ImageUtils.saveImages(request.getImages(), ImageTypeEnum.PRODUCT_IMAGE, productID, imagePort);
         }
 
         ArrayList<ImageEntity> productDescriptionImages = null;
         if(!CollectionUtils.isEmpty(request.getDescriptionImages())){
-            productDescriptionImages = saveImages(request.getDescriptionImages(), ImageTypeEnum.PRODUCT_DESCRIPTION_IMAGE, productID);
+            productDescriptionImages = ImageUtils.saveImages(request.getDescriptionImages(),
+                    ImageTypeEnum.PRODUCT_DESCRIPTION_IMAGE, productID, imagePort);
         }
 
         product.setImages(productImages);
@@ -46,16 +48,4 @@ public class CreateProductUseCase {
         return product;
     }
 
-    private ArrayList<ImageEntity> saveImages(List<String> imageRequests, ImageTypeEnum imageType, Long productID) {
-        var images = imageRequests.stream().map(
-                image -> {
-                    var imageEntity = new ImageEntity();
-                    imageEntity.setEntityId(productID);
-                    imageEntity.setType(imageType.name());
-                    imageEntity.setImg(image);
-                    return imageEntity;
-                }
-        ).toList();
-        return (ArrayList<ImageEntity>) imagePort.saveImages(images);
-    }
 }

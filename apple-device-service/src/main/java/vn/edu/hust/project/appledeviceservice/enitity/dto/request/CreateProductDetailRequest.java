@@ -1,5 +1,7 @@
 package vn.edu.hust.project.appledeviceservice.enitity.dto.request;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CreateProductDetailRequest {
+
+    private String name;
+
     private Long productId;
 
     private Long colorId;
