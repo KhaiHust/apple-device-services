@@ -22,7 +22,9 @@ public enum ErrorCodes {
 
     GET_STORAGE_NOT_FOUND(400008L, "Get storage not found"),
 
-    CREATE_PRODUCT_DETAIL_NOT_FOUND(400009L, "Create product detail fail");
+    CREATE_PRODUCT_DETAIL_NOT_FOUND(400009L, "Create product detail fail"),
+
+    CREATE_INVENTORY_FAIL(4000010L, "Create inventory fail");
 
     private final Long code;
     private final String message;
