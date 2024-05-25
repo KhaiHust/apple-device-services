@@ -24,5 +24,8 @@
     <changeSet id="000007_create_table_inventory.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000007_create_table_inventory.up.sql"/>
     </changeSet>
+    <changeSet id="000008_create_table_user_auth.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000008_create_table_user_auth.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>
