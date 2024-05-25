@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name="Inventory Model")
-@Table(name = "inventory")
+@Table(name = "inventories")
 public class InventoryModel extends BaseModel {
 
     @Column(name = "product_detail_id")
