@@ -30,4 +30,11 @@ public class ProductService implements IProductService {
     public Pair<PageInfo, List<ProductEntity>> getAllProducts(GetProductRequest filter) {
         return getProductUseCase.getAllProducts(filter);
     }
+
+    @Override
+    public ProductEntity getProductDetail(Long id) {
+        return getProductUseCase.getProductDetail(id);
+    }
+
+
 }

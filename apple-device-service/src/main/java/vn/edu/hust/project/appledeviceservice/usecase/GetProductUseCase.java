@@ -18,4 +18,8 @@ public class GetProductUseCase {
     public Pair<PageInfo, List<ProductEntity>> getAllProducts(GetProductRequest filter) {
         return productPort.getAllProducts(filter);
     }
+
+    public ProductEntity getProductDetail(Long id) {
+        return productPort.getProductById(id);
+    }
 }

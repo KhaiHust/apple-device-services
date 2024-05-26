@@ -12,6 +12,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.exception.CreateProductException;
+import vn.edu.hust.project.appledeviceservice.exception.GetProductException;
 import vn.edu.hust.project.appledeviceservice.port.IProductPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IProductRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.ProductModelMapper;
@@ -52,5 +53,12 @@ public class IProductAdapter implements IProductPort {
         var pageInfo = PageInfoUtils.getPageInfoUtils(result);
 
         return Pair.of(pageInfo, ProductModelMapper.INSTANCE.toEntities(result.getContent()));
+    }
+
+    @Override
+    public ProductEntity getProductById(Long id) {
+        return ProductModelMapper.INSTANCE.toEntity(
+                productRepository.findById(id).orElseThrow(GetProductException::new)
+        );
     }
 }

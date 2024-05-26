@@ -12,4 +12,6 @@ public interface IProductService {
     ProductEntity createProduct(CreateProductRequest request);
 
     Pair<PageInfo, List<ProductEntity>> getAllProducts(GetProductRequest filter);
+
+    ProductEntity getProductDetail(Long id);
 }
