@@ -26,7 +26,9 @@ public enum ErrorCodes {
 
     CREATE_INVENTORY_FAIL(4000010L, "Create inventory fail"),
 
-    GET_PRODUCT_NOT_FOUND(4000011L, "Get product not found")
+    GET_PRODUCT_NOT_FOUND(4000011L, "Get product not found"),
+
+    GET_PRODUCT_DETAIL_NOT_FOUND(4000012L, "Get product detail not found")
     ;
 
     private final Long code;
