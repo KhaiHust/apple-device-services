@@ -2,12 +2,24 @@ package vn.edu.hust.project.appledeviceservice.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.exception.CreateProductException;
 import vn.edu.hust.project.appledeviceservice.port.IProductPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IProductRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.ProductModelMapper;
+import vn.edu.hust.project.appledeviceservice.repository.mysql.model.ProductModel;
+import vn.edu.hust.project.appledeviceservice.repository.mysql.specification.ProductSpecification;
+import vn.edu.hust.project.appledeviceservice.utils.PageInfoUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +39,18 @@ public class IProductAdapter implements IProductPort {
             throw new CreateProductException();
         }
 
+    }
+
+    @Override
+    public Pair<PageInfo, List<ProductEntity>> getAllProducts(GetProductRequest filter) {
+
+        Pageable pageable = PageRequest.of(Math.toIntExact(filter.getPage()), Math.toIntExact(filter.getPageSize()),
+                Sort.by("id").descending());
+
+        Page<ProductModel> result = productRepository.findAll(new ProductSpecification(filter), pageable);
+
+        var pageInfo = PageInfoUtils.getPageInfoUtils(result);
+
+        return Pair.of(pageInfo, ProductModelMapper.INSTANCE.toEntities(result.getContent()));
     }
 }
