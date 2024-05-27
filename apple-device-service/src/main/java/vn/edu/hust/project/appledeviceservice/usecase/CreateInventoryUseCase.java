@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.hust.project.appledeviceservice.enitity.InventoryEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateInventoryRequest;
-import vn.edu.hust.project.appledeviceservice.service.IInventoryPort;
+import vn.edu.hust.project.appledeviceservice.port.IInventoryPort;
 
 @Service
 @RequiredArgsConstructor

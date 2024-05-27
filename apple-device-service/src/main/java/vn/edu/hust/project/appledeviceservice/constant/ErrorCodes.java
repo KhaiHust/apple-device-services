@@ -28,8 +28,11 @@ public enum ErrorCodes {
 
     GET_PRODUCT_NOT_FOUND(4000011L, "Get product not found"),
 
-    GET_PRODUCT_DETAIL_NOT_FOUND(4000012L, "Get product detail not found")
-    ;
+    GET_PRODUCT_DETAIL_NOT_FOUND(4000012L, "Get product detail not found"),
+
+    CREATE_USER_FAIL(4000013L, "Create user fail"),
+
+    GET_USER_NOT_FOUND(4000014L, "Get user not found");
 
     private final Long code;
     private final String message;

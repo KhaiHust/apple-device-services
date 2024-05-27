@@ -7,7 +7,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.InventoryEntity;
 import vn.edu.hust.project.appledeviceservice.exception.CreateInventoryException;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IInventoryRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.InventoryModelMapper;
-import vn.edu.hust.project.appledeviceservice.service.IInventoryPort;
+import vn.edu.hust.project.appledeviceservice.port.IInventoryPort;
 
 @Service
 @RequiredArgsConstructor
