@@ -32,7 +32,10 @@ public enum ErrorCodes {
 
     CREATE_USER_FAIL(4000013L, "Create user fail"),
 
-    GET_USER_NOT_FOUND(4000014L, "Get user not found");
+    GET_USER_NOT_FOUND(4000014L, "Get user not found"),
+
+    GET_ROLE_NOT_FOUND(4000015L, "Get role not found")
+    ;
 
     private final Long code;
     private final String message;

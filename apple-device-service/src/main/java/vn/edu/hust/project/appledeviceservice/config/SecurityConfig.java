@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import vn.edu.hust.project.appledeviceservice.port.IRolePort;
 import vn.edu.hust.project.appledeviceservice.port.IUserPort;
 import vn.edu.hust.project.appledeviceservice.security.CustomUserDetails;
 
@@ -19,12 +20,14 @@ public class SecurityConfig {
 
     private final IUserPort userPort;
 
+    private final IRolePort rolePort;
+
     //user's detail object
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> {
             var user = userPort.getUserByEmail(email);
-            return new CustomUserDetails(user, userPort);
+            return new CustomUserDetails(user, userPort, rolePort);
         };
     }
 
