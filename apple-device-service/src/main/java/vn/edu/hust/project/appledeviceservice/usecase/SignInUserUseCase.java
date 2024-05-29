@@ -7,8 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.UserEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.LoginRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.response.LoginResponse;
 import vn.edu.hust.project.appledeviceservice.exception.LoginException;
+import vn.edu.hust.project.appledeviceservice.port.IRolePort;
 import vn.edu.hust.project.appledeviceservice.port.IUserPort;
+import vn.edu.hust.project.appledeviceservice.security.CustomUserDetails;
 import vn.edu.hust.project.appledeviceservice.security.JwtTokenUtil;
 
 @Service
@@ -18,16 +21,22 @@ public class SignInUserUseCase {
     private final IUserPort userPort;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
+    private final IRolePort rolePort;
     private final AuthenticationManager authenticationManager;
 
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
+
         var existedUser = userPort.getUserByEmail(request.getEmail());
-        if (!passwordEncoder.matches(request.getPassword(), existedUser.getPassword())) {
+
+        if (existedUser == null || !passwordEncoder.matches(request.getPassword(), existedUser.getPassword())) {
             throw new LoginException();
         }
+
+        var customUserDetails = new CustomUserDetails(existedUser, userPort, rolePort);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-            existedUser.getEmail(), request.getPassword());
+                request.getEmail(), request.getPassword(), customUserDetails.getAuthorities());
         authenticationManager.authenticate(authenticationToken);
-        return jwtTokenUtil.generateToken(existedUser);
+        return new LoginResponse(existedUser.getEmail(), existedUser.getFirstName(), existedUser.getLastName(),
+                jwtTokenUtil.generateToken(existedUser));
     }
 }

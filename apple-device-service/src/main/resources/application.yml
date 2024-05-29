@@ -21,7 +21,7 @@ app:
           - DELETE
   security:
     jwt:
-      secret: secret
+      secret: JHD2p1EolyuH3K6Gjz05onMO5hRT8CYHJHD2p1EolyuH3K6Gjz05onMO5hRT8CYH
       expiration: 86400000
       header: Authorization
       prefix: Bearer

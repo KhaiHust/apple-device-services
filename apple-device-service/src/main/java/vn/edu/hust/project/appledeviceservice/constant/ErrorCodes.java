@@ -39,6 +39,9 @@ public enum ErrorCodes {
     EMAIL_IS_EXISTED(4000016L, "Email is existed"),
 
     INVALID_EMAIL_OR_PASSWORD(4000017L, "Invalid email or password"),
+
+    UNEXPECTED_ERROR(4000018L, "Unexpected error")
+
     ;
 
     private final Long code;

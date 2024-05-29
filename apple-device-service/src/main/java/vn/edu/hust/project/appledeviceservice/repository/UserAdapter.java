@@ -34,8 +34,7 @@ public class UserAdapter implements IUserPort {
 
     @Override
     public UserEntity getUserByEmail(String email) {
-        return UserModelMapper.INSTANCE.toEntity(
-                userRepository.findByEmail(email).orElseThrow(GetUserException::new)
-        );
+        var userEntityOptional = userRepository.findByEmail(email);
+        return userEntityOptional.map(UserModelMapper.INSTANCE::toEntity).orElse(null);
     }
 }

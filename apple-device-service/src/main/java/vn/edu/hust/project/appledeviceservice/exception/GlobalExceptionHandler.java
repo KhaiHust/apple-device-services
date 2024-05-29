@@ -13,4 +13,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new Resource(ex.getCode(), ex.getMessage()));
     }
+
+    @ExceptionHandler(Unau)
 }
