@@ -19,3 +19,9 @@ app:
           - POST
           - PUT
           - DELETE
+  security:
+    jwt:
+      secret: secret
+      expiration: 86400000
+      header: Authorization
+      prefix: Bearer

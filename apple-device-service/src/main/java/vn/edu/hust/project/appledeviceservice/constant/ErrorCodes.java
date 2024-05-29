@@ -34,7 +34,11 @@ public enum ErrorCodes {
 
     GET_USER_NOT_FOUND(4000014L, "Get user not found"),
 
-    GET_ROLE_NOT_FOUND(4000015L, "Get role not found")
+    GET_ROLE_NOT_FOUND(4000015L, "Get role not found"),
+
+    EMAIL_IS_EXISTED(4000016L, "Email is existed"),
+
+    INVALID_EMAIL_OR_PASSWORD(4000017L, "Invalid email or password"),
     ;
 
     private final Long code;
