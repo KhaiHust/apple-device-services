@@ -26,11 +26,14 @@ import java.util.List;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
 import vn.edu.hust.project.appledeviceservice.exception.HttpFilterException;
 import vn.edu.hust.project.appledeviceservice.exception.UnauthorizedException;
+import vn.edu.hust.project.appledeviceservice.property.RequestFilter;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
+
+    private final RequestFilter requestFilter;
 
     private final UserDetailsService userDetailsService;
 
@@ -93,10 +96,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         @NonNull HttpServletRequest request
     ) {
         final List<Pair<String, String>> bypassToken =
-            Arrays.asList(
-                Pair.of("/ops/api/v1/auth/sign-up", "POST"),
-                Pair.of("/ops/api/v1/auth/login", "POST")
-            );
+            requestFilter.getPublicUrls().stream().toList();
         for (var byPassToken : bypassToken) {
             if (request.getRequestURI().equals(byPassToken.getFirst()) && request.getMethod()
                 .equals(byPassToken.getSecond())) {

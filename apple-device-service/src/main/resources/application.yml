@@ -25,3 +25,6 @@ app:
       expiration: 86400000
       header: Authorization
       prefix: Bearer
+    filter:
+      publicUrls:
+        - {"/ops/api/v1/auth/sign-up", "POST"}
