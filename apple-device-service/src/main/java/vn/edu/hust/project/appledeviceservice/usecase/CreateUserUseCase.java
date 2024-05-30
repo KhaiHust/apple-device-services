@@ -19,7 +19,7 @@ import vn.edu.hust.project.appledeviceservice.security.JwtTokenUtil;
 @RequiredArgsConstructor
 @Slf4j
 public class CreateUserUseCase {
-    public static final Long DEFAULT_ROLE_ID = 1L;
+    public static final Long DEFAULT_ROLE_ID = 3L;
 
     private final IUserPort userPort;
 
@@ -41,7 +41,7 @@ public class CreateUserUseCase {
         var user = UserResourceMapper.INSTANCE.fromRequestToEntity(request);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoleId(DEFAULT_ROLE_ID);
+        user.setRoleId(request.getRoleId() != null ? request.getRoleId() : DEFAULT_ROLE_ID);
         user = userPort.save(user);
 
 

@@ -2,6 +2,7 @@ package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import vn.edu.hust.project.appledeviceservice.service.IInventoryService;
 public class InventoryController {
     private final IInventoryService inventoryService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     ResponseEntity<Resource> createInventory(
             @RequestBody CreateInventoryRequest request

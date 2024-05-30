@@ -27,5 +27,11 @@
     <changeSet id="000008_create_table_user_auth.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000008_create_table_user_auth.up.sql"/>
     </changeSet>
+    <changeSet id="000009_add_default_roles.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000009_add_default_roles.up.sql"/>
+    </changeSet>
+    <changeSet id="0000010_add_default_admin_user.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/0000010_add_default_admin_user.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>

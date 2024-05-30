@@ -31,9 +31,8 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //TODO: get role from db
-//        var role = rolePort.getRoleById(userEntity.getRoleId());
-//        return Collections.singleton(new SimpleGrantedAuthority(role.getCode()));
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        var role = rolePort.getRoleById(userEntity.getRoleId());
+        return Collections.singleton(new SimpleGrantedAuthority(role.getCode()));
     }
 
     @Override

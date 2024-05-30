@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import vn.edu.hust.project.appledeviceservice.property.RequestFilter;
 import vn.edu.hust.project.appledeviceservice.security.JwtTokenFilter;
 
 @Configuration
@@ -15,20 +16,26 @@ import vn.edu.hust.project.appledeviceservice.security.JwtTokenFilter;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
+    private final RequestFilter requestFilter;
+
     private final JwtTokenFilter jwtTokenFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-         http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
-                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                 .authorizeHttpRequests(requests -> {
-                     requests.requestMatchers("/ops/api/v1/auth/sign-up",
-                             "/ops/api/v1/auth/login")
-                             .permitAll()
-                         .requestMatchers("","/ops/api/v1/colors").hasRole("USER")
-                             .anyRequest().authenticated();
-                 });
-         return http.build();
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(requests -> {
+                    requestFilter.getPublicUrls().forEach(url -> {
+                        requests.requestMatchers(url.getFirst()).permitAll();
+                    });
+                    requestFilter.getProtectedUrls().forEach(url -> {
+                        requests.requestMatchers(url.getUrlPattern()).hasAnyRole(url.getRoles().toArray(new String[0]))
+                                ;
+                    });
+
+                    requests.anyRequest().authenticated();
+                });
+        return http.build();
     }
 }
