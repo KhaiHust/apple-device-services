@@ -8,11 +8,16 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<Resource> handleApplicationException(ApplicationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new Resource(ex.getCode(), ex.getMessage()));
+            .body(new Resource(ex.getCode(), ex.getMessage()));
     }
 
-    @ExceptionHandler(Unau)
+    @ExceptionHandler(HttpFilterException.class)
+    public ResponseEntity<Resource> handleUnauthorizedException(HttpFilterException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(new Resource(ex.getCode(), ex.getMessage()));
+    }
 }

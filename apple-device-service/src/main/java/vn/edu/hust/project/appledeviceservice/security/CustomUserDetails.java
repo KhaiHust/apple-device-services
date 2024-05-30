@@ -1,5 +1,7 @@
 package vn.edu.hust.project.appledeviceservice.security;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +12,8 @@ import vn.edu.hust.project.appledeviceservice.port.IUserPort;
 
 import java.util.Collection;
 import java.util.Collections;
-
+@Getter
+@Setter
 public class CustomUserDetails implements UserDetails {
     private final UserEntity userEntity;
     private final Collection<? extends GrantedAuthority> authorities;
@@ -20,7 +23,7 @@ public class CustomUserDetails implements UserDetails {
 
     public CustomUserDetails(UserEntity userEntity, IUserPort userPort, IRolePort rolePort) {
         this.userEntity = userEntity;
-        this.authorities = Collections.singletonList(new SimpleGrantedAuthority("USER"));
+        this.authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
         this.userPort = userPort;
         this.rolePort = rolePort;
     }
@@ -30,7 +33,7 @@ public class CustomUserDetails implements UserDetails {
         //TODO: get role from db
 //        var role = rolePort.getRoleById(userEntity.getRoleId());
 //        return Collections.singleton(new SimpleGrantedAuthority(role.getCode()));
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

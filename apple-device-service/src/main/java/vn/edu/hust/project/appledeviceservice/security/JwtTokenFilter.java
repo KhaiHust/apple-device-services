@@ -1,59 +1,105 @@
 package vn.edu.hust.project.appledeviceservice.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
+import vn.edu.hust.project.appledeviceservice.exception.HttpFilterException;
+import vn.edu.hust.project.appledeviceservice.exception.UnauthorizedException;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    private final JwtTokenUtil jwtTokenUtil;
+
+
     @Override
+    @SneakyThrows
     protected void doFilterInternal(
-            @NonNull HttpServletRequest request,
-            @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain)  {
+        @NonNull HttpServletRequest request,
+        @NonNull HttpServletResponse response,
+        @NonNull FilterChain filterChain) {
         try {
-            if(isByPassToken(request)) {
+            if (isByPassToken(request)) {
                 filterChain.doFilter(request, response);
+                return;
             }
             final String authorizationHeader = request.getHeader("Authorization");
-            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-                throw new HttpClientErrorException.Unauthorized();
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")
+                && authorizationHeader.length() > 7) {
+                final var token = authorizationHeader.substring(7);
+                final var email = jwtTokenUtil.extractEmail(token);
+
+                if (email != null
+                    && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    var existingUser = (CustomUserDetails) userDetailsService.loadUserByUsername(email);
+
+                    if (jwtTokenUtil.validateToken(token, existingUser)) {
+                        var authentication = new UsernamePasswordAuthenticationToken(
+                            existingUser, null, existingUser.getAuthorities()
+                        );
+                        authentication.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                }
+                filterChain.doFilter(request, response);
+                return;
             }
+            throw new UnauthorizedException();
 
-        } catch (IOException | ServletException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            log.error("[JwtTokenFilter] token filter error: {}", ex.getMessage());
+            setUnauthorizedResponse(response);
         }
-
 
 
     }
 
+    private void setUnauthorizedResponse(HttpServletResponse response) throws IOException {
+        var responseEntity = ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(new Resource((long) HttpStatus.UNAUTHORIZED.value(), "Unauthorized"));
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        response.setStatus(responseEntity.getStatusCodeValue());
+        response.getWriter().write(mapper.writeValueAsString(responseEntity.getBody()));
+    }
+
     private boolean isByPassToken(
-            @NonNull HttpServletRequest request
+        @NonNull HttpServletRequest request
     ) {
         final List<Pair<String, String>> bypassToken =
-                Arrays.asList(
-                        Pair.of("/ops/api/v1/auth/sign-up", "POST"),
-                        Pair.of("/ops/api/v1/auth/login", "POST")
-                );
+            Arrays.asList(
+                Pair.of("/ops/api/v1/auth/sign-up", "POST"),
+                Pair.of("/ops/api/v1/auth/login", "POST")
+            );
         for (var byPassToken : bypassToken) {
-            if (request.getRequestURI().equals(byPassToken.getFirst()) && request.getMethod().equals(byPassToken.getSecond())) {
+            if (request.getRequestURI().equals(byPassToken.getFirst()) && request.getMethod()
+                .equals(byPassToken.getSecond())) {
                 return true;
             }
         }

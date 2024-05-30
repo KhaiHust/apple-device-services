@@ -7,6 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import vn.edu.hust.project.appledeviceservice.enitity.UserEntity;
 import vn.edu.hust.project.appledeviceservice.exception.UnExceptedException;
@@ -62,5 +63,14 @@ public class JwtTokenUtil {
     //check expiration
     private Boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
+    }
+
+    public String extractEmail(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public boolean validateToken(String token, UserDetails user) {
+        final var email = extractEmail(token);
+        return (email.equals(user.getUsername()) && !isTokenExpired(token));
     }
 }
