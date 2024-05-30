@@ -95,8 +95,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private boolean isByPassToken(
         @NonNull HttpServletRequest request
     ) {
-        final List<Pair<String, String>> bypassToken =
-            requestFilter.getPublicUrls().stream().toList();
+
+        var bypassToken = requestFilter.getPublicUrls();
+        ;
         for (var byPassToken : bypassToken) {
             if (request.getRequestURI().equals(byPassToken.getFirst()) && request.getMethod()
                 .equals(byPassToken.getSecond())) {

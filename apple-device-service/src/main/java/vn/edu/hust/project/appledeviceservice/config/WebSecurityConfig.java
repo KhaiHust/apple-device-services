@@ -1,7 +1,5 @@
 package vn.edu.hust.project.appledeviceservice.config;
 
-import static org.springframework.http.HttpMethod.GET;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,16 +22,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-         http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
-                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                 .authorizeHttpRequests(requests -> {
-                     requests.requestMatchers("/ops/api/v1/auth/sign-up",
-                             "/ops/api/v1/auth/login")
-                             .permitAll()
-                         .requestMatchers("/ops/api/v1/colors/**").hasRole("ADMIN")
-                             .anyRequest().authenticated();
-                 });
-         return http.build();
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(requests -> {
+                    requestFilter.getPublicUrls().forEach(url -> {
+                        requests.requestMatchers(url.getFirst()).permitAll();
+                    });
+                    requestFilter.getProtectedUrls().forEach(url -> {
+                        requests.requestMatchers(url.getUrlPattern()).hasAnyRole(url.getRoles().toArray(new String[0]))
+                                ;
+                    });
+
+                    requests.anyRequest().authenticated();
+                });
+        return http.build();
     }
 }

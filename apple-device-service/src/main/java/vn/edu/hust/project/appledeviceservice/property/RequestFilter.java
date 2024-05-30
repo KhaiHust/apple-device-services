@@ -9,7 +9,8 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.util.Pair;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Configuration
@@ -24,7 +25,8 @@ public class RequestFilter {
     @Getter
     @Setter
     public static class ProtectedUrls{
-        Map<String, Object> urls;
+        private String urlPattern;
+        private List<String> roles;
     }
 
 }
