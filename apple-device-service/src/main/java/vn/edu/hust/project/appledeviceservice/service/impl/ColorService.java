@@ -12,6 +12,7 @@ import vn.edu.hust.project.appledeviceservice.usecase.CreateColorUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.GetColorUseCase;
 
 import java.util.List;
+import vn.edu.hust.project.appledeviceservice.usecase.RemoveColorUseCase;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,9 @@ public class ColorService implements IColorService {
     private final CreateColorUseCase createColorUseCase;
 
     private final GetColorUseCase getColorUseCase;
+
+    private final RemoveColorUseCase removeColorUseCase;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ColorEntity createColorEntity(ColorEntity colorEntity) {
@@ -34,5 +38,10 @@ public class ColorService implements IColorService {
     @Override
     public ColorEntity getColorById(Long id) {
         return getColorUseCase.getColorById(id);
+    }
+
+    @Override
+    public void deleteColorById(Long id) {
+        removeColorUseCase.removeColorById(id);
     }
 }

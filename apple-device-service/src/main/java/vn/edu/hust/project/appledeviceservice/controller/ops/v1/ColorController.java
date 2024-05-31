@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,5 +67,13 @@ public class ColorController {
         return ResponseEntity.ok(new Resource(colorService.getColorById(colorId)));
     }
 
+    @PreAuthorize("ROLE_ADMIN")
+    @DeleteMapping("/{color_id}")
+    public ResponseEntity<Resource> deleteColor(
+            @PathVariable(name = "color_id") Long colorId
+    ){
+        colorService.deleteColorById(colorId);
+        return ResponseEntity.ok(new Resource(null));
+    }
 
 }

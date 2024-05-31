@@ -40,7 +40,9 @@ public enum ErrorCodes {
 
     INVALID_EMAIL_OR_PASSWORD(4000017L, "Invalid email or password"),
 
-    UNEXPECTED_ERROR(4000018L, "Unexpected error")
+    UNEXPECTED_ERROR(4000018L, "Unexpected error"),
+
+    REMOVE_COLOR_FAIL(4000019L, "Remove color fail"),
 
     ;
 

@@ -13,4 +13,6 @@ public interface IColorService {
     Pair<PageInfo, List<ColorEntity>> getAllColors(GetColorRequest filter);
 
     ColorEntity getColorById(Long id);
+
+    void deleteColorById(Long id);
 }
