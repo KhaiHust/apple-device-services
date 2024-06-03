@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.hust.project.appledeviceservice.enitity.dto.LoginRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.LoginRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateUserRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
 import vn.edu.hust.project.appledeviceservice.service.IUserService;

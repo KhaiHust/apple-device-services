@@ -2,7 +2,7 @@ package vn.edu.hust.project.appledeviceservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vn.edu.hust.project.appledeviceservice.enitity.dto.LoginRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.LoginRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateUserRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.LoginResponse;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.SignUpResponse;

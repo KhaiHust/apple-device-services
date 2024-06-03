@@ -9,6 +9,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.service.IStorageService;
 import vn.edu.hust.project.appledeviceservice.usecase.CreateStorageUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.GetStorageUseCase;
+import vn.edu.hust.project.appledeviceservice.usecase.RemoveStorageUseCase;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class StorageService implements IStorageService {
     private final CreateStorageUseCase createStorageUseCase;
 
     private final GetStorageUseCase getStorageUseCase;
+
+    private final RemoveStorageUseCase removeStorageUseCase;
 
     @Override
     public StorageEntity createStorage(StorageEntity storageEntity) {
@@ -33,5 +36,10 @@ public class StorageService implements IStorageService {
     @Override
     public StorageEntity getStorageById(Long id) {
         return getStorageUseCase.getStorageById(id);
+    }
+
+    @Override
+    public void deleteStorageById(Long id) {
+        removeStorageUseCase.removeStorageId(id);
     }
 }

@@ -10,6 +10,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.service.ITypeService;
 import vn.edu.hust.project.appledeviceservice.usecase.CreateTypeUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.GetTypeUseCase;
+import vn.edu.hust.project.appledeviceservice.usecase.RemoveTypeUseCase;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class TypeService implements ITypeService {
     private final CreateTypeUseCase createTypeUseCase;
 
     private final GetTypeUseCase getTypeUseCase;
+
+    private final RemoveTypeUseCase removeTypeUseCase;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -35,5 +38,10 @@ public class TypeService implements ITypeService {
     @Override
     public TypeEntity getTypeById(Long id) {
         return getTypeUseCase.getTypeById(id);
+    }
+
+    @Override
+    public void deleteTypeById(Long id) {
+        removeTypeUseCase.removeTypeById(id);
     }
 }

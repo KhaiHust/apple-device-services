@@ -44,6 +44,10 @@ public enum ErrorCodes {
 
     REMOVE_COLOR_FAIL(4000019L, "Remove color fail"),
 
+    REMOVE_STORAGE_FAIL(4000020L, "Remove storage fail"),
+
+    REMOVE_TYPE_FAIL(4000021L, "Remove type fail"),
+
     ;
 
     private final Long code;
