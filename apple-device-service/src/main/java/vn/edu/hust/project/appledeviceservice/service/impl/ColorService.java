@@ -44,4 +44,9 @@ public class ColorService implements IColorService {
     public void deleteColorById(Long id) {
         removeColorUseCase.removeColorById(id);
     }
+
+    @Override
+    public ColorEntity updateColorEntity(ColorEntity colorEntity) {
+        return null;
+    }
 }
