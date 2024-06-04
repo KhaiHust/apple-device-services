@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.constant.ImageTypeEnum;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductDetailEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequestWeb;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.port.IImagePort;
 import vn.edu.hust.project.appledeviceservice.port.IProductDetailPort;
@@ -35,5 +36,11 @@ public class GetProductDetailUseCase {
         productDetail.setImages(images);
 
         return productDetail;
+    }
+
+    public Pair<PageInfo, List<ProductDetailEntity>> getAllProductDetailsWeb(
+            GetProductDetailRequestWeb filter
+    ) {
+        return productDetailPort.getAllProductDetailsWeb(filter);
     }
 }

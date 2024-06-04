@@ -9,4 +9,6 @@ public class GetProductDetailRequestWeb extends BaseEntity {
     private String type;
     private String category;
     private String status;
+    private Long page;
+    private Long pageSize;
 }
