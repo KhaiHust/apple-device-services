@@ -16,4 +16,9 @@ public interface IProductDetailPort {
     ProductDetailEntity getProductDetail(Long id);
 
     Pair<PageInfo, List<ProductDetailEntity>> getAllProductDetailsWeb(GetProductDetailRequestWeb filter);
+
+    List<ProductDetailEntity> getProductDetailsByProductIdAndStorageId(Long productId, Long storageId);
+
+    List<ProductDetailEntity> getProductDetailsByProductId(Long productId);
+
 }

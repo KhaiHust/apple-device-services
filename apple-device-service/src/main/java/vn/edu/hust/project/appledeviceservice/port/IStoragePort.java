@@ -15,4 +15,6 @@ public interface IStoragePort {
     StorageEntity getStorageById(Long id);
 
     void deleteStorageById(Long id);
+
+    List<StorageEntity> findByIds(List<Long> ids);
 }

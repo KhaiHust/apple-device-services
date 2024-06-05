@@ -74,4 +74,9 @@ public class ColorAdapter implements IColorPort {
 
     }
 
+    @Override
+    public List<ColorEntity> findByIds(List<Long> ids) {
+        return ColorModelMapper.INSTANCE.toEntities(colorRepository.findByIdIn(ids));
+    }
+
 }

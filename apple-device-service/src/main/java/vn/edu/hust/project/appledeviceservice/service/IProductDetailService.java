@@ -9,6 +9,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDeta
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 
 import java.util.List;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.response.ProductDetailWebResponse;
 
 @Service
 public interface IProductDetailService {
@@ -21,4 +22,6 @@ public interface IProductDetailService {
     Pair<PageInfo, List<ProductDetailEntity>> getAllProductDetailsWeb(
             GetProductDetailRequestWeb filter
     );
+
+    ProductDetailWebResponse getProductDetailWebById(Long id);
 }
