@@ -1,6 +1,7 @@
 package vn.edu.hust.project.appledeviceservice.repository;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -44,12 +45,17 @@ public class InventoryAdapter implements IInventoryPort {
     @Override
     public Pair<PageInfo, List<InventoryEntity>> getAllInventory(GetInventoryRequest filter) {
         Pageable pageable = PageRequest.of(Math.toIntExact(filter.getPage()), Math.toIntExact(filter.getPageSize()),
-            Sort.by("id").descending());
+                Sort.by("id").descending());
         Page<InventoryModel> result = inventoryRepository.findAll(new InventorySpecification(filter), pageable);
 
         var pageInfo = PageInfoUtils.getPageInfoUtils(result);
 
         return Pair.of(pageInfo, InventoryModelMapper.INSTANCE.toEntities(result.getContent()));
+    }
+
+    @Override
+    public List<InventoryEntity> getInventoryByProductDetailIds(List<Long> productDetailIds) {
+        return InventoryModelMapper.INSTANCE.toEntities(inventoryRepository.findByProductDetailIdIn(productDetailIds));
     }
 
 

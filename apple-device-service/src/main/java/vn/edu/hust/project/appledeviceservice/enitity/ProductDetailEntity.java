@@ -31,4 +31,11 @@ public class ProductDetailEntity extends BaseEntity {
     private Long price;
 
     private List<ImageEntity> images;
+
+    private ColorEntity color;
+
+    private StorageEntity storage;
+
+    private InventoryEntity inventory;
+
 }

@@ -50,7 +50,7 @@ public class StorageAdapter implements IStoragePort {
     @Override
     public StorageEntity getStorageById(Long id) {
         var model = storageRepository.findById(id);
-        if(model.isPresent()){
+        if (model.isPresent()) {
             return StorageModelMapper.INSTANCE.toStorageEntity(model.get());
         }
         throw new GetStorageException();
@@ -64,5 +64,10 @@ public class StorageAdapter implements IStoragePort {
             log.error("[StorageAdapter] Error when delete storage with id: {}", id, e);
             throw new RemoveStorageException();
         }
+    }
+
+    @Override
+    public List<StorageEntity> findByIds(List<Long> ids) {
+        return StorageModelMapper.INSTANCE.toStorageEntities(storageRepository.findByIdIn(ids));
     }
 }
