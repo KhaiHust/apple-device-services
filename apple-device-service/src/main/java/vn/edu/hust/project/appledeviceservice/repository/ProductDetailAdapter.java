@@ -10,10 +10,12 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductDetailEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequestWeb;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.exception.CreateProductDetailException;
 import vn.edu.hust.project.appledeviceservice.exception.GetProductDetailException;
 import vn.edu.hust.project.appledeviceservice.port.IProductDetailPort;
+import vn.edu.hust.project.appledeviceservice.repository.mysql.ICustomProductDetailRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IProductDetailRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.ProductDetailModelMapper;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.model.ProductDetailModel;
@@ -27,6 +29,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductDetailAdapter implements IProductDetailPort {
     private final IProductDetailRepository productDetailRepository;
+
+    private final ICustomProductDetailRepository customProductDetailRepository;
 
     @Override
     public ProductDetailEntity save(ProductDetailEntity entity) {
@@ -60,4 +64,30 @@ public class ProductDetailAdapter implements IProductDetailPort {
                 ).orElseThrow(GetProductDetailException::new)
         );
     }
+
+    @Override
+    public Pair<PageInfo, List<ProductDetailEntity>> getAllProductDetailsWeb(GetProductDetailRequestWeb filter) {
+        //TODO: implement later
+        var pageInfo = new PageInfo();
+
+        var productDetailModels = customProductDetailRepository.getAllProductDetails(filter);
+        return Pair.of(pageInfo, ProductDetailModelMapper.INSTANCE.toEntities(productDetailModels));
+
+    }
+
+    @Override
+    public List<ProductDetailEntity> getProductDetailsByProductIdAndStorageId(Long productId, Long storageId) {
+        return ProductDetailModelMapper.INSTANCE.toEntities(
+                productDetailRepository.findByProductIdAndStorageId(productId, storageId)
+        );
+    }
+
+    @Override
+    public List<ProductDetailEntity> getProductDetailsByProductId(Long productId) {
+        return ProductDetailModelMapper.INSTANCE.toEntities(
+                productDetailRepository.findByProductId(productId)
+        );
+    }
+
+
 }

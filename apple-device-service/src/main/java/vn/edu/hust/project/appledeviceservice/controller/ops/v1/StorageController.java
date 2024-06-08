@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class StorageController {
     @PostMapping
     public ResponseEntity<Resource> createStorage(
             @RequestBody CreateStorageRequest createStorageRequest
-            ){
+    ) {
         return ResponseEntity.ok(
                 new Resource(storageService.
                         createStorage(StorageResourceMapper.INSTANCE.toStorageEntityFromRequest(createStorageRequest)))
@@ -43,7 +44,7 @@ public class StorageController {
             @RequestParam(required = false, name = "volume") Long volume,
             @RequestParam(defaultValue = DEFAULT_PAGE, name = "page") Long page,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE, name = "page_size") Long pageSize
-    ){
+    ) {
         var filter = new GetStorageRequest();
         filter.setVolume(volume);
         filter.setPage(page);
@@ -63,10 +64,20 @@ public class StorageController {
 
     @GetMapping("/{storage_id}")
     public ResponseEntity<Resource> getDetail(
-            @PathVariable (name = "storage_id") Long storageId
-    ){
+            @PathVariable(name = "storage_id") Long storageId
+    ) {
         return ResponseEntity.ok(
                 new Resource(storageService.getStorageById(storageId))
         );
+    }
+
+
+    @DeleteMapping("/{storage_id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Resource> deleteStorage(
+            @PathVariable(name = "storage_id") Long storageId
+    ) {
+        storageService.deleteStorageById(storageId);
+        return ResponseEntity.ok(new Resource(null));
     }
 }

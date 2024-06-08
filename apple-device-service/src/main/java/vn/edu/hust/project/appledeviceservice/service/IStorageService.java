@@ -13,4 +13,6 @@ public interface IStorageService {
     Pair<PageInfo, List<StorageEntity>> getAllStorage(GetStorageRequest filter);
 
     StorageEntity getStorageById(Long id);
+
+    void deleteStorageById(Long id);
 }

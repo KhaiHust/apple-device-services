@@ -17,9 +17,6 @@ public class CreateColorRequest {
     @Valid
     @NotNull(message = "Color name must not be null")
     private String name;
-
-    @NotNull(message = "Color code must not be null")
     private String code;
-
     private String description;
 }

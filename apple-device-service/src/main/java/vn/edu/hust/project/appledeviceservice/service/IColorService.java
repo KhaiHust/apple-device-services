@@ -15,4 +15,6 @@ public interface IColorService {
     ColorEntity getColorById(Long id);
 
     void deleteColorById(Long id);
+
+    ColorEntity updateColorEntity(ColorEntity colorEntity);
 }

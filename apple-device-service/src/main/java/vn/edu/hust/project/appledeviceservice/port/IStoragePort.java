@@ -13,4 +13,8 @@ public interface IStoragePort {
     Pair<PageInfo, List<StorageEntity>> getAllStorage(GetStorageRequest filter);
 
     StorageEntity getStorageById(Long id);
+
+    void deleteStorageById(Long id);
+
+    List<StorageEntity> findByIds(List<Long> ids);
 }

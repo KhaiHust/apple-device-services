@@ -13,4 +13,6 @@ public interface ITypePort {
     Pair<PageInfo, List<TypeEntity>> getAllTypes(GetTypeRequest filter);
 
     TypeEntity getTypeById(Long id);
+
+    void deleteTypeById(Long id);
 }

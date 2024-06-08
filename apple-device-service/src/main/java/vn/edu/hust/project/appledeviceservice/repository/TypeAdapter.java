@@ -1,6 +1,7 @@
 package vn.edu.hust.project.appledeviceservice.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.TypeEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetTypeRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.exception.GetTypeException;
+import vn.edu.hust.project.appledeviceservice.exception.RemoveTypeException;
 import vn.edu.hust.project.appledeviceservice.port.ITypePort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.ITypeRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.TypeModelMapper;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TypeAdapter implements ITypePort {
 
     private final ITypeRepository typeRepository;
@@ -54,5 +57,15 @@ public class TypeAdapter implements ITypePort {
 
         throw new GetTypeException();
 
+    }
+
+    @Override
+    public void deleteTypeById(Long id) {
+        try {
+            typeRepository.deleteById(id);
+        } catch (Exception e) {
+            log.error("Error when delete type by id: {}", id);
+            throw new RemoveTypeException();
+        }
     }
 }

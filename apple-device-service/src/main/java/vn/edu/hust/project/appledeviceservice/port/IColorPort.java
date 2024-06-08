@@ -15,4 +15,6 @@ public interface IColorPort {
     ColorEntity getColorById(Long id);
 
     void deleteColorById(Long id);
+
+    List<ColorEntity> findByIds(List<Long> ids);
 }
