@@ -8,6 +8,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateProductD
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequestWeb;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.response.ProductDetailWebResponse;
 import vn.edu.hust.project.appledeviceservice.service.IProductDetailService;
 import vn.edu.hust.project.appledeviceservice.usecase.CreateProductDetailUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.GetListProductDetailWebUseCase;
@@ -43,5 +44,10 @@ public class ProductDetailService implements IProductDetailService {
     @Override
     public Pair<PageInfo, List<ProductDetailEntity>> getAllProductDetailsWeb(GetProductDetailRequestWeb filter) {
         return getListProductDetailWebUseCase.getAllProductDetailsWeb(filter);
+    }
+
+    @Override
+    public ProductDetailWebResponse getProductDetailWebById(Long id) {
+        return getListProductDetailWebUseCase.getProductDetailWebById(id);
     }
 }
