@@ -5,28 +5,23 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.util.Arrays;
-import java.util.List;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
-import vn.edu.hust.project.appledeviceservice.exception.HttpFilterException;
 import vn.edu.hust.project.appledeviceservice.exception.UnauthorizedException;
 import vn.edu.hust.project.appledeviceservice.property.RequestFilter;
+
+import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
@@ -99,7 +94,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         var bypassToken = requestFilter.getPublicUrls();
         ;
         for (var byPassToken : bypassToken) {
-            if (request.getRequestURI().equals(byPassToken.getFirst()) && request.getMethod()
+            if (request.getRequestURI().matches(byPassToken.getFirst()) && request.getMethod()
                 .equals(byPassToken.getSecond())) {
                 return true;
             }

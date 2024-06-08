@@ -48,6 +48,10 @@ public enum ErrorCodes {
 
     REMOVE_TYPE_FAIL(4000021L, "Remove type fail"),
 
+    CREATE_CART_FAIL(4000022L, "Create cart fail"),
+
+    BAD_REQUEST(400L, "Bad request"),
+
     ;
 
     private final Long code;
