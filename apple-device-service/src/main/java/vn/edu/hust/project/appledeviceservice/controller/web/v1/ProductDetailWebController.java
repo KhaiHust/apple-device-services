@@ -21,7 +21,6 @@ public class ProductDetailWebController {
     public static final String DEFAULT_PAGE_SIZE = "10";
     @GetMapping
     public ResponseEntity<Resource> getALlProductDetails(
-            @RequestParam(required = false, name = "name") String name,
             @RequestParam(required = false, name = "type") String type,
             @RequestParam(defaultValue = DEFAULT_PAGE, name = "page") Long page,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE, name = "page_size") Long pageSize
@@ -43,9 +42,9 @@ public class ProductDetailWebController {
         return ResponseEntity.ok(resource);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details")
     public ResponseEntity<Resource> getProductDetailById(
-            @PathVariable(name = "id") Long id
+            @RequestParam(name = "id") Long id
     ) {
         var productDetail = productDetailService.getProductDetailWebById(id);
         return ResponseEntity.ok(new Resource(productDetail));

@@ -33,6 +33,8 @@ app:
           second: GET
         - first: /web/api/v1/product_details
           second: GET
+        - first: /web/api/v1/product_details/details
+          second: GET
       protectedUrls:
         - urlPattern: /ops/api/v1/colors/**
           roles:

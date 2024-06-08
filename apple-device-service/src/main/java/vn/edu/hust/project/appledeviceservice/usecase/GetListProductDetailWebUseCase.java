@@ -1,6 +1,7 @@
 package vn.edu.hust.project.appledeviceservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -12,6 +13,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.StorageEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequestWeb;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.ProductDetailWebResponse;
+import vn.edu.hust.project.appledeviceservice.exception.GetProductDetailException;
 import vn.edu.hust.project.appledeviceservice.mapper.ProductDetailResourceMapper;
 import vn.edu.hust.project.appledeviceservice.port.IColorPort;
 import vn.edu.hust.project.appledeviceservice.port.IImagePort;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GetListProductDetailWebUseCase {
     private final IProductPort productPort;
     private final IProductDetailPort productDetailPort;
@@ -44,26 +47,31 @@ public class GetListProductDetailWebUseCase {
     }
 
     public ProductDetailWebResponse getProductDetailWebById(Long id) {
-        var productDetail = productDetailPort.getProductDetail(id);
-        var productDetailImages = imagePort.getImagesByEntityIdAndType(productDetail.getId(),
-                ImageTypeEnum.PRODUCT_DESCRIPTION_IMAGE.name());
-        productDetail.setImages(productDetailImages);
+        try {
+            var productDetail = productDetailPort.getProductDetail(id);
+            var productDetailImages = imagePort.getImagesByEntityIdAndType(productDetail.getId(),
+                    ImageTypeEnum.PRODUCT_DESCRIPTION_IMAGE.name());
+            productDetail.setImages(productDetailImages);
 
-        var productDetailWebResponse = ProductDetailResourceMapper.INSTANCE
-                .toWebResponse(productDetail);
+            var productDetailWebResponse = ProductDetailResourceMapper.INSTANCE
+                    .toWebResponse(productDetail);
 
-        var product = productPort.getProductById(productDetail.getProductId());
-        productDetailWebResponse.setProduct(product);
+            var product = productPort.getProductById(productDetail.getProductId());
+            productDetailWebResponse.setProduct(product);
 
-        var productDetails = getProductDetailEntitiesByProductId(product.getId());
-
-
-        makeRelatedColorResponse(productDetail, productDetailWebResponse, productDetails);
+            var productDetails = getProductDetailEntitiesByProductId(product.getId());
 
 
-        makeRelatedStorageResponse(productDetails, productDetailWebResponse);
+            makeRelatedColorResponse(productDetail, productDetailWebResponse, productDetails);
 
-        return productDetailWebResponse;
+
+            makeRelatedStorageResponse(productDetails, productDetailWebResponse);
+
+            return productDetailWebResponse;
+        } catch (Exception e) {
+            log.error("[GetListProductDetailWebUseCase] getProductDetailWebById error: {}", e.getMessage());
+            throw new GetProductDetailException();
+        }
     }
 
     private static void makeRelatedStorageResponse(List<ProductDetailEntity> productDetails, ProductDetailWebResponse productDetailWebResponse) {
@@ -127,7 +135,7 @@ public class GetListProductDetailWebUseCase {
     private void makeRelatedColorResponse(ProductDetailEntity productDetail, ProductDetailWebResponse productDetailWebResponse,
                                           List<ProductDetailEntity> productDetails) {
         var relatedProductDetailsByColors = productDetails.stream()
-                .filter(productDetailEntity -> productDetailEntity.getColorId().equals(productDetail.getColorId()))
+                .filter(productDetailEntity -> productDetailEntity.getStorageId().equals(productDetail.getStorageId()))
                 .toList();
 
         if (!CollectionUtils.isEmpty(relatedProductDetailsByColors)) {

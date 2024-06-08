@@ -20,8 +20,10 @@ public abstract class ProductDetailResourceMapper {
 
     public abstract ProductDetailWebResponse toWebResponse(ProductDetailEntity productDetailEntity);
 
+    @Mapping(target = "productDetailId", source = "id")
     public abstract RelatedColorWebResponse toRelatedColorWebResponse(ProductDetailEntity productDetailEntity);
 
+    @Mapping(target = "productDetailId", source = "id")
     public abstract RelatedStorageResponse toRelatedStorageWebResponse(ProductDetailEntity productDetailEntity);
 
     public abstract List<RelatedColorWebResponse>
