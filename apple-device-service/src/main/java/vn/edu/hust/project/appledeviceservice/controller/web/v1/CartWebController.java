@@ -2,6 +2,7 @@ package vn.edu.hust.project.appledeviceservice.controller.web.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,12 @@ public class CartWebController {
     ) {
         var userId = userSecurityService.getUserId();
         return ResponseEntity.ok(new Resource(cartService.createCart(request, userId)));
+    }
+
+    @GetMapping
+    public ResponseEntity<Resource> getCartByUserId() {
+        var userId = userSecurityService.getUserId();
+        return ResponseEntity.ok(new Resource(cartService.getCartByUserId(userId)));
     }
 
 }

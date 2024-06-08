@@ -9,6 +9,8 @@ import vn.edu.hust.project.appledeviceservice.port.ICartPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.ICartRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.CartModelMapper;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -25,5 +27,12 @@ public class CartAdapter implements ICartPort {
             log.error("[CartAdapter] save cart error: {}", e.getMessage());
             throw new CreateCartException();
         }
+    }
+
+    @Override
+    public List<CartEntity> getCartByUserId(Long userId) {
+        return CartModelMapper.INSTANCE.toEntities(
+                cartRepository.findByUserId(userId)
+        );
     }
 }

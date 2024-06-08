@@ -21,4 +21,6 @@ public interface IProductDetailPort {
 
     List<ProductDetailEntity> getProductDetailsByProductId(Long productId);
 
+    List<ProductDetailEntity> getProductDetailByIds(List<Long> ids);
+
 }

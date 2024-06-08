@@ -10,4 +10,6 @@ public interface IProductDetailRepository extends IBaseRepository<ProductDetailM
     List<ProductDetailModel> findByProductIdAndStorageId(Long productId, Long storageId);
 
     List<ProductDetailModel> findByProductId(Long productId);
+
+    List<ProductDetailModel> findByIdIn(List<Long> ids);
 }

@@ -13,6 +13,7 @@ public class CreateCartUseCase {
     private final ICartPort cartPort;
 
     public CartEntity createCart(CreateCartRequest request, Long userId){
+        //Todo: validate cart by user before add
         var cartEntity = CartResourceMapper.INSTANCE.toEntityFromRequest(request);
         cartEntity.setUserId(userId);
         return cartPort.save(cartEntity);

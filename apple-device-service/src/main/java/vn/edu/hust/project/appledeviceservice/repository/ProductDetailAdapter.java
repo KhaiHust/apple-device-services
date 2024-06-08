@@ -89,5 +89,12 @@ public class ProductDetailAdapter implements IProductDetailPort {
         );
     }
 
+    @Override
+    public List<ProductDetailEntity> getProductDetailByIds(List<Long> ids) {
+        return ProductDetailModelMapper.INSTANCE.toEntities(
+                productDetailRepository.findByIdIn(ids)
+        );
+    }
+
 
 }

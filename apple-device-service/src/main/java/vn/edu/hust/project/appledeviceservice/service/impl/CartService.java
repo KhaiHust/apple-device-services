@@ -6,14 +6,24 @@ import vn.edu.hust.project.appledeviceservice.enitity.CartEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateCartRequest;
 import vn.edu.hust.project.appledeviceservice.service.ICartService;
 import vn.edu.hust.project.appledeviceservice.usecase.CreateCartUseCase;
+import vn.edu.hust.project.appledeviceservice.usecase.GetCartUseCase;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CartService implements ICartService {
     private final CreateCartUseCase createCartUseCase;
 
+    private final GetCartUseCase getCartUseCase;
+
     @Override
     public CartEntity createCart(CreateCartRequest request, Long userId) {
         return createCartUseCase.createCart(request, userId);
+    }
+
+    @Override
+    public List<CartEntity> getCartByUserId(Long userId) {
+        return getCartUseCase.getCartByUserId(userId);
     }
 }
