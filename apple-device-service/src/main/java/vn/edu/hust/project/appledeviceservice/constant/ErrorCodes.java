@@ -52,6 +52,11 @@ public enum ErrorCodes {
 
     BAD_REQUEST(400L, "Bad request"),
 
+    UPDATE_CART_FAIL(4000023L, "Update cart fail"),
+
+    GET_CART_NOT_FOUND(4000024L, "Cart not found"),
+
+    DELETE_CART_FAIL(4000025L, "Delete cart fail"),
     ;
 
     private final Long code;

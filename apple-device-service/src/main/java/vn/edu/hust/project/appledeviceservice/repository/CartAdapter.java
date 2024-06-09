@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.CartEntity;
 import vn.edu.hust.project.appledeviceservice.exception.CreateCartException;
+import vn.edu.hust.project.appledeviceservice.exception.DeleteCartException;
+import vn.edu.hust.project.appledeviceservice.exception.GetCartException;
 import vn.edu.hust.project.appledeviceservice.port.ICartPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.ICartRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.CartModelMapper;
@@ -34,5 +36,37 @@ public class CartAdapter implements ICartPort {
         return CartModelMapper.INSTANCE.toEntities(
                 cartRepository.findByUserId(userId)
         );
+    }
+
+    @Override
+    public CartEntity getCartByUserIdAndCartId(Long userId, Long cartId) {
+        return CartModelMapper.INSTANCE.toEntity(
+                cartRepository.findByUserIdAndId(userId, cartId).orElse(null)
+        );
+    }
+
+    @Override
+    public CartEntity getCartByUserIdAndProductDetailId(Long userId, Long productDetailId) {
+        return CartModelMapper.INSTANCE.toEntity(
+                cartRepository.findByUserIdAndProductDetailId(userId, productDetailId).orElse(null)
+        );
+    }
+
+    @Override
+    public CartEntity getCartByIdAndUserId(Long id, Long userId) {
+        return CartModelMapper.INSTANCE.toEntity(
+                cartRepository.findByIdAndUserId(id, userId).orElseThrow(GetCartException::new)
+        );
+    }
+
+    @Override
+    public void deleteCart(Long id) {
+        try {
+            cartRepository.deleteById(id);
+        } catch (Exception e) {
+            log.error("[CartAdapter] delete cart error: {}", e.getMessage());
+            throw new DeleteCartException();
+        }
+
     }
 }

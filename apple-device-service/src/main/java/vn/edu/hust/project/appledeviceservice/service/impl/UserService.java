@@ -2,6 +2,7 @@ package vn.edu.hust.project.appledeviceservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateUserWebRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.LoginRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateUserRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.LoginResponse;
@@ -27,4 +28,15 @@ public class UserService implements IUserService {
     public LoginResponse loginOps(LoginRequest request) {
         return signInUserUseCase.login(request);
     }
+
+    @Override
+    public LoginResponse loginWeb(LoginRequest request) {
+        return signInUserUseCase.login(request);
+    }
+
+    @Override
+    public SignUpResponse signUpWeb(CreateUserWebRequest request) {
+        return createUserUseCase.createUserWeb(request);
+    }
+
 }

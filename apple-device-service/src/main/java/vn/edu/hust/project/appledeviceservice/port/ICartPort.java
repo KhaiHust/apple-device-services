@@ -8,4 +8,12 @@ public interface ICartPort {
     CartEntity save(CartEntity cartEntity);
 
     List<CartEntity> getCartByUserId(Long userId);
+
+    CartEntity getCartByUserIdAndCartId(Long userId, Long cartId);
+
+    CartEntity getCartByUserIdAndProductDetailId(Long userId, Long productDetailId);
+
+    CartEntity getCartByIdAndUserId(Long id, Long userId);
+
+    void deleteCart(Long id);
 }

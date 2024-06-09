@@ -12,4 +12,6 @@ public interface IInventoryPort {
     Pair<PageInfo, List<InventoryEntity>> getAllInventory(GetInventoryRequest filter);
 
     List<InventoryEntity> getInventoryByProductDetailIds(List<Long> productDetailIds);
+
+    InventoryEntity getInventoryByProductDetailId(Long productDetailId);
 }

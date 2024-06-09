@@ -58,5 +58,11 @@ public class InventoryAdapter implements IInventoryPort {
         return InventoryModelMapper.INSTANCE.toEntities(inventoryRepository.findByProductDetailIdIn(productDetailIds));
     }
 
+    @Override
+    public InventoryEntity getInventoryByProductDetailId(Long productDetailId) {
+        return InventoryModelMapper.INSTANCE.
+                toEntity(inventoryRepository.findByProductDetailId(productDetailId).orElse(null));
+    }
+
 
 }

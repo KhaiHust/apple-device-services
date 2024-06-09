@@ -35,6 +35,10 @@ app:
           second: GET
         - first: /web/api/v1/product_details/details
           second: GET
+        - first: /web/api/v1/auth/sign-up
+          second: POST
+        - first: /web/api/v1/auth/login
+          second: POST
       protectedUrls:
         - urlPattern: /ops/api/v1/colors/**
           roles:
