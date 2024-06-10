@@ -77,6 +77,6 @@ public class TypeController {
             @PathVariable(name = "id") Long id
     ) {
         typeService.deleteTypeById(id);
-        return ResponseEntity.ok(new Resource());
+        return ResponseEntity.ok(new Resource(null));
     }
 }
