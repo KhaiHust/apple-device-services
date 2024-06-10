@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import vn.edu.hust.project.appledeviceservice.service.ITypeService;
 @RestController
 @RequestMapping("/ops/api/v1/types")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class TypeController {
 
     public static final String DEFAULT_PAGE = "0";

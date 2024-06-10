@@ -19,6 +19,7 @@ app:
           - POST
           - PUT
           - DELETE
+          - PATCH
   security:
     jwt:
       secret: JHD2p1EolyuH3K6Gjz05onMO5hRT8CYHJHD2p1EolyuH3K6Gjz05onMO5hRT8CYH
