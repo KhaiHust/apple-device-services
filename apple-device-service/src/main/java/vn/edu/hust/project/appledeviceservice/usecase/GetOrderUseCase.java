@@ -3,6 +3,8 @@ package vn.edu.hust.project.appledeviceservice.usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetOrderRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
@@ -13,10 +15,32 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GetOrderUseCase {
+
     private final IOrderPort orderPort;
 
+    private final GetOrderLineUseCase getOrderLineUseCase;
+
     public Pair<PageInfo, List<OrderEntity>> getAllOrder(GetOrderRequest request) {
-        return orderPort.getAllOrder(request);
+
+        var result = orderPort.getAllOrder(request);
+
+        if (ObjectUtils.isEmpty(result) || CollectionUtils.isEmpty(result.getSecond()))
+            return result;
+
+        var orders = result.getSecond();
+        var orderIds = orders.stream().map(OrderEntity::getId).toList();
+        var orderLines = getOrderLineUseCase.getOrderLineByOrderIds(orderIds);
+        if (CollectionUtils.isEmpty(orderLines))
+            return result;
+
+        orders = orders.stream().peek(order -> {
+            var lines = orderLines.stream()
+                    .filter(orderLine -> orderLine.getOrderId().equals(order.getId()))
+                    .toList();
+            order.setOrderLines(lines);
+        }).toList();
+
+        return Pair.of(result.getFirst(), orders);
     }
 
 }

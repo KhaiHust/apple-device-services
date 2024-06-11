@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,4 +19,7 @@ public class OrderEntity extends BaseEntity{
     private String paymentState;
     private Long totalPrice;
     private Long shippingInfoId;
+    List<OrderLineEntity> orderLines;
+    private Long createdAt;
+    private Long updatedAt;
 }
