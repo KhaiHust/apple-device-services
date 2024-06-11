@@ -14,6 +14,8 @@ import java.util.List;
 public abstract class OrderModelMapper {
     public static final OrderModelMapper INSTANCE = Mappers.getMapper(OrderModelMapper.class);
 
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     public abstract OrderModel toModel(OrderEntity entity);
 
     @Mapping(target = "createdAt", source = "createdAt", qualifiedByName = "toUnixDate")
