@@ -35,7 +35,8 @@ public class SignInUserUseCase {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 request.getEmail(), request.getPassword(), customUserDetails.getAuthorities());
         authenticationManager.authenticate(authenticationToken);
+        var role = rolePort.getRoleById(existedUser.getRoleId());
         return new LoginResponse(existedUser.getEmail(), existedUser.getFirstName(), existedUser.getLastName(),
-                jwtTokenUtil.generateToken(existedUser));
+                jwtTokenUtil.generateToken(existedUser), role.getCode());
     }
 }
