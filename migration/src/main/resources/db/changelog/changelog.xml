@@ -42,5 +42,8 @@
     <changeSet id="0000013_create_table_order_lines.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/0000013_create_table_order_lines.up.sql"/>
     </changeSet>
+    <changeSet id="000014_create_table_shipping_info.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000014_create_table_shipping_info.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>

@@ -16,8 +16,8 @@ import lombok.Setter;
 @Entity(name = "Shipping Info Model")
 @Table(name = "shipping_infos")
 public class ShippingInfoModel extends BaseModel{
-    @Column(name = "label")
-    private String label;
+    @Column(name = "gender")
+    private String gender;
 
     @Column(name = "received_name")
     private String receivedName;
@@ -41,5 +41,5 @@ public class ShippingInfoModel extends BaseModel{
     private String note;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 }

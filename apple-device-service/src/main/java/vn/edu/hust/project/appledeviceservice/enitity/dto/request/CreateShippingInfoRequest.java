@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CreateShippingInfoRequest {
+    private String gender;
     private String fullName;
     private String phoneNumber;
     private String address;

@@ -16,4 +16,5 @@ public class WardEntity {
     private String code;
     private String name;
     private String districtCode;
+    private String level;
 }

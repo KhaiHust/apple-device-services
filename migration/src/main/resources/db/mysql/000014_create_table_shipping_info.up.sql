@@ -2,7 +2,7 @@ CREATE TABLE shipping_infos
 (
     `id`                int PRIMARY KEY AUTO_INCREMENT,
     `user_id`           int REFERENCES users (id),
-    `label`             varchar(255) NOT NULL,
+    `gender`             varchar(255) NOT NULL,
     `received_name`     varchar(255) NOT NULL,
     `phone`             varchar(255) NOT NULL,
     `address`           varchar(255) NOT NULL,
