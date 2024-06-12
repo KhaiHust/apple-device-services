@@ -57,6 +57,16 @@ public enum ErrorCodes {
     GET_CART_NOT_FOUND(4000024L, "Cart not found"),
 
     DELETE_CART_FAIL(4000025L, "Delete cart fail"),
+
+    CREATE_WARD_FAIL(4000026L, "Create ward fail"),
+
+    CREATE_DISTRICT_FAIL(4000027L, "Create district fail"),
+
+    CREATE_PROVINCE_FAIL(4000028L, "Create province fail"),
+
+    CREATE_SHIPPING_INFO_FAIL(4000029L, "Create shipping info fail"),
+
+    GET_SHIPPING_INFO_NOT_FOUND(4000030L, "Get shipping info not found"),
     ;
 
     private final Long code;

@@ -73,4 +73,9 @@ app:
             - ADMIN
             - USER
             - MODERATOR
+        - urlPattern: /web/api/v1/shipping_infos/*
+          roles:
+            - ADMIN
+            - USER
+            - MODERATOR
 
