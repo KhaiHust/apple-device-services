@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.usecase;
 
 import io.lettuce.core.RedisConnectionException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import vn.edu.hust.project.appledeviceservice.mapper.OrderResourceMapper;
 import vn.edu.hust.project.appledeviceservice.port.IInventoryPort;
 import vn.edu.hust.project.appledeviceservice.port.IOrderLinePort;
 import vn.edu.hust.project.appledeviceservice.port.IOrderPort;
+import vn.edu.hust.project.appledeviceservice.port.IProductDetailPort;
 import vn.edu.hust.project.appledeviceservice.port.IRedisPort;
 
 @Service
@@ -28,11 +30,20 @@ public class CreateOrderUseCase {
     private final IInventoryPort inventoryPort;
     private final IRedisPort redisPort;
     private final IOrderLinePort orderLinePort;
+    private final IProductDetailPort productDetailPort;
 
     @Transactional(rollbackFor = Exception.class)
     public OrderEntity createOrder(CreateOrderRequest createOrderRequest) {
         try {
             var orderLines = createOrderRequest.getOrderLines();
+            var productDetailIds = orderLines.stream()
+                .map(orderLine -> orderLine.getProductDetailId())
+                .collect(Collectors.toList());
+            var productDetails = productDetailPort.getProductDetailByIds(productDetailIds);
+
+            var totalPrice = productDetails.stream()
+                .mapToLong(productDetail -> productDetail.getPrice())
+                .sum();
             if (CollectionUtils.isEmpty(orderLines)) {
                 //Todo create exception
                 throw new IllegalArgumentException("Order lines is empty");
@@ -40,6 +51,7 @@ public class CreateOrderUseCase {
 
             var order = OrderResourceMapper.INSTANCE.createOrderFromRequest(createOrderRequest);
             order.setState(OrderState.PENDING.name());
+            order.setTotalPrice(totalPrice);
             order = orderPort.save(order);
 
             var orderLineEntities = new ArrayList<OrderLineEntity>();

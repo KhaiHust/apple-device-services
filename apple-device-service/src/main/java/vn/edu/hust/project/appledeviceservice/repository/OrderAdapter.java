@@ -1,6 +1,7 @@
 package vn.edu.hust.project.appledeviceservice.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,7 @@ import vn.edu.hust.project.appledeviceservice.utils.PageInfoUtils;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderAdapter implements IOrderPort {
 
     private final IOrderRepository orderRepository;
@@ -42,6 +44,7 @@ public class OrderAdapter implements IOrderPort {
             return OrderModelMapper.INSTANCE.toEntity(orderModel);
         } catch (Exception e) {
             //Todo: create exception
+            log.error("[OrderAdapter] Can not save order: err: " + e.getMessage());
             throw new IllegalArgumentException("Can not save order");
         }
 

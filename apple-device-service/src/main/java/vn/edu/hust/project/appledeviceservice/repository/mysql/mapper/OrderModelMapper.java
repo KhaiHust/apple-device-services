@@ -18,18 +18,20 @@ public abstract class OrderModelMapper {
 
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-
+    @Mapping(target = "code", source = "code", qualifiedByName = "createOrderCode")
     public abstract OrderModel toModel(OrderEntity entity);
 
     @Mapping(target = "createdAt", source = "createdAt", qualifiedByName = "toUnixDate")
     @Mapping(target = "updatedAt", source = "updatedAt", qualifiedByName = "toUnixDate")
-    @Mapping(target = "code", source = "code", qualifiedByName = "createOrderCode")
     public abstract OrderEntity toEntity(OrderModel model);
 
     public abstract List<OrderEntity> toEntities(List<OrderModel> models);
 
     @Named("toUnixDate")
     public Long toUnixDate(Instant time) {
+        if(time == null){
+            return null;
+        }
         return time.toEpochMilli() / 1000;
     }
 
