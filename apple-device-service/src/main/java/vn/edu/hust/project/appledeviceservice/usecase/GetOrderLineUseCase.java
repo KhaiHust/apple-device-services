@@ -15,4 +15,8 @@ public class GetOrderLineUseCase {
     public List<OrderLineEntity> getOrderLineByOrderIds(List<Long> orderIds) {
         return orderLinePort.getOrderLineByOrderIds(orderIds);
     }
+
+    public List<OrderLineEntity> getOrderLineByOrderId(Long orderId) {
+        return orderLinePort.getOrderLineByOrderIds(List.of(orderId));
+    }
 }

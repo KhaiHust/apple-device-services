@@ -11,4 +11,6 @@ public interface IOrderPort {
     Pair<PageInfo, List<OrderEntity>> getAllOrder(GetOrderRequest request);
 
     OrderEntity save(OrderEntity orderEntity);
+
+    OrderEntity getOrderById(Long orderId);
 }

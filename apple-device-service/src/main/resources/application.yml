@@ -13,6 +13,7 @@ spring:
     redis:
       host: localhost
       port: 6380
+      password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
 
 app:
   service:
@@ -86,4 +87,12 @@ app:
           roles:
             - ADMIN
             - USER
+            - MODERATOR
+        - urlPattern: /ops/api/v1/orders/*
+          roles:
+                - ADMIN
+                - MODERATOR
+        - urlPattern: /ops/api/v1/orders/states/*
+          roles:
+            - ADMIN
             - MODERATOR

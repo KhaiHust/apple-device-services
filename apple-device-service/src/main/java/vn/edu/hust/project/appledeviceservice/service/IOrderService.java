@@ -12,4 +12,8 @@ public interface IOrderService {
     Pair<PageInfo, List<OrderEntity>> getAllOrder(GetOrderRequest request);
 
     OrderEntity createOrder(CreateOrderRequest request);
+
+    OrderEntity confirmOrder(Long orderId);
+
+    OrderEntity updateStateOrder(Long orderId, String state);
 }

@@ -1,8 +1,10 @@
 package vn.edu.hust.project.appledeviceservice.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderLineEntity;
+import vn.edu.hust.project.appledeviceservice.exception.CreateOrderLineException;
 import vn.edu.hust.project.appledeviceservice.port.IOrderLinePort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IOrderLineRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.OrderLineModelMapper;
@@ -11,7 +13,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class IOrderLineAdapter implements IOrderLinePort {
+@Slf4j
+public class OrderLineAdapter implements IOrderLinePort {
     private final IOrderLineRepository orderLineRepository;
 
     @Override
@@ -26,8 +29,8 @@ public class IOrderLineAdapter implements IOrderLinePort {
             orderLineModel = orderLineRepository.save(orderLineModel);
             return OrderLineModelMapper.INSTANCE.toEntity(orderLineModel);
         } catch (Exception e){
-            //Todo: create exception
-            throw new IllegalArgumentException("Can not save order line");
+            log.error("[OrderLineAdapter] Can not save order line: err: " + e.getMessage());
+            throw new CreateOrderLineException();
         }
     }
 }

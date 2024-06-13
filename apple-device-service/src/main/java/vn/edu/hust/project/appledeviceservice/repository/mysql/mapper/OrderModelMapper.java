@@ -7,10 +7,12 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.util.StringUtils;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderEntity;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.model.OrderModel;
-
-import java.time.Instant;
-import java.util.List;
 import vn.edu.hust.project.appledeviceservice.utils.RandomStringUtils;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
+import java.util.List;
 
 @Mapper
 public abstract class OrderModelMapper {
@@ -28,11 +30,11 @@ public abstract class OrderModelMapper {
     public abstract List<OrderEntity> toEntities(List<OrderModel> models);
 
     @Named("toUnixDate")
-    public Long toUnixDate(Instant time) {
+    public Long toUnixDate(LocalDateTime time) {
         if(time == null){
             return null;
         }
-        return time.toEpochMilli() / 1000;
+        return time.toEpochSecond(ZoneOffset.UTC);
     }
 
     @Named("createOrderCode")

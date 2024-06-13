@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetOrderRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
+import vn.edu.hust.project.appledeviceservice.exception.CreateOrderException;
 import vn.edu.hust.project.appledeviceservice.port.IOrderPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IOrderRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.OrderModelMapper;
@@ -43,10 +44,14 @@ public class OrderAdapter implements IOrderPort {
             orderModel = orderRepository.save(orderModel);
             return OrderModelMapper.INSTANCE.toEntity(orderModel);
         } catch (Exception e) {
-            //Todo: create exception
             log.error("[OrderAdapter] Can not save order: err: " + e.getMessage());
-            throw new IllegalArgumentException("Can not save order");
+            throw new CreateOrderException();
         }
 
+    }
+
+    @Override
+    public OrderEntity getOrderById(Long orderId) {
+        return OrderModelMapper.INSTANCE.toEntity(orderRepository.findById(orderId).orElse(null));
     }
 }

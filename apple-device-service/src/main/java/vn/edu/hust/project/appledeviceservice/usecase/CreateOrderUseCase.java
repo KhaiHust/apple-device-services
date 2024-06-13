@@ -2,8 +2,6 @@ package vn.edu.hust.project.appledeviceservice.usecase;
 
 
 import io.lettuce.core.RedisConnectionException;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,12 +12,19 @@ import vn.edu.hust.project.appledeviceservice.constant.OrderState;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderLineEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateOrderRequest;
+import vn.edu.hust.project.appledeviceservice.exception.ChangeInventoryException;
+import vn.edu.hust.project.appledeviceservice.exception.CreateOrderException;
+import vn.edu.hust.project.appledeviceservice.exception.NotEnoughInventoryException;
+import vn.edu.hust.project.appledeviceservice.exception.RedisConnectException;
 import vn.edu.hust.project.appledeviceservice.mapper.OrderResourceMapper;
 import vn.edu.hust.project.appledeviceservice.port.IInventoryPort;
 import vn.edu.hust.project.appledeviceservice.port.IOrderLinePort;
 import vn.edu.hust.project.appledeviceservice.port.IOrderPort;
 import vn.edu.hust.project.appledeviceservice.port.IProductDetailPort;
 import vn.edu.hust.project.appledeviceservice.port.IRedisPort;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,16 +42,16 @@ public class CreateOrderUseCase {
         try {
             var orderLines = createOrderRequest.getOrderLines();
             var productDetailIds = orderLines.stream()
-                .map(orderLine -> orderLine.getProductDetailId())
-                .collect(Collectors.toList());
+                    .map(orderLine -> orderLine.getProductDetailId())
+                    .collect(Collectors.toList());
             var productDetails = productDetailPort.getProductDetailByIds(productDetailIds);
 
             var totalPrice = productDetails.stream()
-                .mapToLong(productDetail -> productDetail.getPrice())
-                .sum();
+                    .mapToLong(productDetail -> productDetail.getPrice())
+                    .sum();
             if (CollectionUtils.isEmpty(orderLines)) {
-                //Todo create exception
-                throw new IllegalArgumentException("Order lines is empty");
+                log.error("[CreateOrderUseCase] Order lines is empty");
+                throw new CreateOrderException();
             }
 
             var order = OrderResourceMapper.INSTANCE.createOrderFromRequest(createOrderRequest);
@@ -57,7 +62,7 @@ public class CreateOrderUseCase {
             var orderLineEntities = new ArrayList<OrderLineEntity>();
             for (var orderLine : orderLines) {
                 var lockKey =
-                    Key.INVENTORY_PRODUCT_DETAIL.getPrefixKey() + orderLine.getProductDetailId();
+                        Key.INVENTORY_PRODUCT_DETAIL.getPrefixKey() + orderLine.getProductDetailId();
                 var newOrderLine = new OrderLineEntity();
                 newOrderLine.setOrderId(order.getId());
                 newOrderLine.setProductDetailId(orderLine.getProductDetailId());
@@ -66,16 +71,17 @@ public class CreateOrderUseCase {
                 while (true) {
                     try {
                         if (Boolean.TRUE.equals(
-                            redisPort.lockKey(lockKey, order.getId().toString(), 10L))) {
+                                redisPort.lockKey(lockKey, order.getId().toString(), 10L))) {
                             changeInventory(orderLine.getProductDetailId(),
-                                orderLine.getQuantity());
+                                    orderLine.getQuantity());
                             orderLineEntities.add(orderLinePort.save(newOrderLine));
                             break;
                         }
                     } catch (RedisConnectionException e) {
-                        log.error("Error when creating order line", e);
-                        // Add additional error handling here if necessary
+                        log.error("[CreateOrderUseCase] Redis connect fail, err: " + e.getMessage());
+                        throw new RedisConnectException();
                     } finally {
+                        log.info("[CreateOrderUseCase] Release lock key: " + lockKey);
                         redisPort.deleteKey(lockKey);
                     }
 
@@ -90,11 +96,10 @@ public class CreateOrderUseCase {
             }
             order.setOrderLines(orderLineEntities);
             return order;
+        } catch (ChangeInventoryException ex) {
+            throw new NotEnoughInventoryException();
         } catch (Exception ex) {
-            log.error("Error when create order", ex);
-            //Todo create exception
-            throw new IllegalArgumentException("Can not create order");
-
+            throw new CreateOrderException();
         }
 
     }
@@ -102,12 +107,13 @@ public class CreateOrderUseCase {
     private void changeInventory(Long productDetailId, Long quantity) {
         var inventory = inventoryPort.getInventoryByProductDetailId(productDetailId);
         if (inventory == null || quantity > inventory.getAvailable()) {
-            //Todo create exception
-            throw new IllegalArgumentException("Inventory not found");
+            log.error("[CreateOrderUseCase] Inventory is not enough");
+            throw new ChangeInventoryException();
         }
 
         inventory.setAvailable(inventory.getAvailable() - quantity);
         inventory.setSold(inventory.getSold() + quantity);
+
         inventoryPort.save(inventory);
     }
 }
