@@ -33,4 +33,17 @@ public class OrderAdapter implements IOrderPort {
 
         return Pair.of(pageInfo, OrderModelMapper.INSTANCE.toEntities(result.getContent()));
     }
+
+    @Override
+    public OrderEntity save(OrderEntity orderEntity) {
+        try {
+            var orderModel = OrderModelMapper.INSTANCE.toModel(orderEntity);
+            orderModel = orderRepository.save(orderModel);
+            return OrderModelMapper.INSTANCE.toEntity(orderModel);
+        } catch (Exception e) {
+            //Todo: create exception
+            throw new IllegalArgumentException("Can not save order");
+        }
+
+    }
 }

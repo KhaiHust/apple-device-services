@@ -18,4 +18,16 @@ public class IOrderLineAdapter implements IOrderLinePort {
     public List<OrderLineEntity> getOrderLineByOrderIds(List<Long> orderIds) {
         return OrderLineModelMapper.INSTANCE.toEntities(orderLineRepository.findByOrderIdIn(orderIds));
     }
+
+    @Override
+    public OrderLineEntity save(OrderLineEntity orderLineEntity) {
+        try {
+            var orderLineModel = OrderLineModelMapper.INSTANCE.toModel(orderLineEntity);
+            orderLineModel = orderLineRepository.save(orderLineModel);
+            return OrderLineModelMapper.INSTANCE.toEntity(orderLineModel);
+        } catch (Exception e){
+            //Todo: create exception
+            throw new IllegalArgumentException("Can not save order line");
+        }
+    }
 }

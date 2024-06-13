@@ -9,6 +9,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  data:
+    redis:
+      host: localhost
+      port: 6380
 
 app:
   service:
@@ -78,4 +82,8 @@ app:
             - ADMIN
             - USER
             - MODERATOR
-
+        - urlPattern: /web/api/v1/orders/*
+          roles:
+            - ADMIN
+            - USER
+            - MODERATOR
