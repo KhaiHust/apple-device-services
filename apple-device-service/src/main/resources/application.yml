@@ -88,6 +88,10 @@ app:
             - ADMIN
             - USER
             - MODERATOR
+        - urlPattern: /ops/api/v1/orders/cancel/*
+          roles:
+            - ADMIN
+            - MODERATOR
         - urlPattern: /ops/api/v1/orders/*
           roles:
                 - ADMIN

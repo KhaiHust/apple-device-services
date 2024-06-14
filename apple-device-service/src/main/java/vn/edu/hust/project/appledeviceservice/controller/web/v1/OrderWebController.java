@@ -3,6 +3,7 @@ package vn.edu.hust.project.appledeviceservice.controller.web.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,5 +58,12 @@ public class OrderWebController {
         return ResponseEntity.ok(new Resource(orderService.createOrder(request)));
     }
 
+    @PatchMapping
+    public ResponseEntity<Resource> confirmOrder(
+            @RequestParam(name = "order_id") Long orderId
+    ) {
+        orderService.cancelOrderWeb(orderId, userSecurityService.getUserId());
+        return ResponseEntity.ok(new Resource(null));
+    }
 
 }

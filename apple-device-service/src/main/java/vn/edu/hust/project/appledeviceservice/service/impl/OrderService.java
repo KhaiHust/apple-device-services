@@ -8,6 +8,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateOrderReq
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetOrderRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.service.IOrderService;
+import vn.edu.hust.project.appledeviceservice.usecase.CancelOrderUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.CreateOrderUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.GetOrderUseCase;
 import vn.edu.hust.project.appledeviceservice.usecase.UpdateOrderUseCase;
@@ -23,6 +24,8 @@ public class OrderService implements IOrderService {
     private final CreateOrderUseCase createOrderUseCase;
 
     private final UpdateOrderUseCase updateOrderUseCase;
+
+    private final CancelOrderUseCase cancelOrderUseCase;
 
     @Override
     public Pair<PageInfo, List<OrderEntity>> getAllOrder(GetOrderRequest request) {
@@ -40,7 +43,12 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public OrderEntity updateStateOrder(Long orderId, String state) {
+    public OrderEntity updateStateOrderOps(Long orderId, String state) {
         return updateOrderUseCase.updateStateOrder(orderId, state);
+    }
+
+    @Override
+    public void cancelOrderWeb(Long orderId, Long userId) {
+        cancelOrderUseCase.cancelOrderWeb(orderId, userId);
     }
 }

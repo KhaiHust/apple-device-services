@@ -13,4 +13,6 @@ public interface IOrderPort {
     OrderEntity save(OrderEntity orderEntity);
 
     OrderEntity getOrderById(Long orderId);
+
+    OrderEntity getOrderByIdAndUserId(Long orderId, Long userId);
 }

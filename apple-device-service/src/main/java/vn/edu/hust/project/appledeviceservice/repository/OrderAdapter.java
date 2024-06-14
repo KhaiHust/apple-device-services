@@ -18,6 +18,7 @@ import vn.edu.hust.project.appledeviceservice.repository.mysql.specification.Ord
 import vn.edu.hust.project.appledeviceservice.utils.PageInfoUtils;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -53,5 +54,10 @@ public class OrderAdapter implements IOrderPort {
     @Override
     public OrderEntity getOrderById(Long orderId) {
         return OrderModelMapper.INSTANCE.toEntity(orderRepository.findById(orderId).orElse(null));
+    }
+
+    @Override
+    public OrderEntity getOrderByIdAndUserId(Long orderId, Long userId) {
+        return OrderModelMapper.INSTANCE.toEntity(orderRepository.findByIdAndUserId(orderId, userId).orElse(null));
     }
 }

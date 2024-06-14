@@ -22,4 +22,5 @@ public class OrderEntity extends BaseEntity{
     List<OrderLineEntity> orderLines;
     private Long createdAt;
     private Long updatedAt;
+    private ShippingInfoEntity shippingInfo;
 }

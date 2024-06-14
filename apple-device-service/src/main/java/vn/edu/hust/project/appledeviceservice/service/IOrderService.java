@@ -15,5 +15,7 @@ public interface IOrderService {
 
     OrderEntity confirmOrder(Long orderId);
 
-    OrderEntity updateStateOrder(Long orderId, String state);
+    OrderEntity updateStateOrderOps(Long orderId, String state);
+
+    void cancelOrderWeb(Long orderId, Long userId);
 }

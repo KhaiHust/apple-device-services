@@ -11,16 +11,12 @@ import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetOrderReques
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.MetaDataWithTotalRecord;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
 import vn.edu.hust.project.appledeviceservice.service.IOrderService;
-import vn.edu.hust.project.appledeviceservice.service.IUserSecurityService;
 
 @RestController
 @RequestMapping("/ops/api/v1/orders")
 @RequiredArgsConstructor
 public class OrderController {
     private final IOrderService orderService;
-
-    private final IUserSecurityService userSecurityService;
-
     public static final String DEFAULT_PAGE = "0";
     public static final String DEFAULT_PAGE_SIZE = "10";
 
@@ -51,7 +47,7 @@ public class OrderController {
             @RequestParam(name = "order_id") Long orderId,
             @RequestParam(name = "state") String state
     ) {
-        return ResponseEntity.ok(new Resource(orderService.updateStateOrder(orderId, state)));
+        return ResponseEntity.ok(new Resource(orderService.updateStateOrderOps(orderId, state)));
     }
 
 }

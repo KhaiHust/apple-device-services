@@ -36,6 +36,7 @@ public class CreateOrderUseCase {
     private final IRedisPort redisPort;
     private final IOrderLinePort orderLinePort;
     private final IProductDetailPort productDetailPort;
+    private final ChangeInventoryUseCase changeInventoryUseCase;
 
     @Transactional(rollbackFor = Exception.class)
     public OrderEntity createOrder(CreateOrderRequest createOrderRequest) {
@@ -72,7 +73,7 @@ public class CreateOrderUseCase {
                     try {
                         if (Boolean.TRUE.equals(
                                 redisPort.lockKey(lockKey, order.getId().toString(), 10L))) {
-                            changeInventory(orderLine.getProductDetailId(),
+                            changeInventoryUseCase.changeInventoryForCreateOrder(orderLine.getProductDetailId(),
                                     orderLine.getQuantity());
                             orderLineEntities.add(orderLinePort.save(newOrderLine));
                             break;
@@ -104,16 +105,4 @@ public class CreateOrderUseCase {
 
     }
 
-    private void changeInventory(Long productDetailId, Long quantity) {
-        var inventory = inventoryPort.getInventoryByProductDetailId(productDetailId);
-        if (inventory == null || quantity > inventory.getAvailable()) {
-            log.error("[CreateOrderUseCase] Inventory is not enough");
-            throw new ChangeInventoryException();
-        }
-
-        inventory.setAvailable(inventory.getAvailable() - quantity);
-        inventory.setSold(inventory.getSold() + quantity);
-
-        inventoryPort.save(inventory);
-    }
 }

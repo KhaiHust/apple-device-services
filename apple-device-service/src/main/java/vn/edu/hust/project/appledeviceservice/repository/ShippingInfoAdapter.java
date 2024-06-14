@@ -10,6 +10,8 @@ import vn.edu.hust.project.appledeviceservice.port.IShippingInfoPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IShippingInfoRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.ShippingInfoModelMapper;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -31,5 +33,10 @@ public class ShippingInfoAdapter implements IShippingInfoPort {
     public ShippingInfoEntity getInfoByUserIdAndId(Long userId, Long id) {
         return ShippingInfoModelMapper.INSTANCE.toEntity(
                 shippingInfoRepository.findByUserIdAndId(userId, id).orElseThrow(GetShippingInfoException::new));
+    }
+
+    @Override
+    public List<ShippingInfoEntity> getInfoByIds(List<Long> ids) {
+        return ShippingInfoModelMapper.INSTANCE.toEntityList(shippingInfoRepository.findByIdIn(ids));
     }
 }

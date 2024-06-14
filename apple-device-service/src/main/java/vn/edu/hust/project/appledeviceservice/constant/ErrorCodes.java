@@ -79,6 +79,8 @@ public enum ErrorCodes {
     NOT_ENOUGH_INVENTORY(4000035L, "Not enough inventory"),
 
     UPDATE_ORDER_FAIL(4000036L, "Update order fail"),
+
+    CANCEL_ORDER_FAIL(4000037L, "Cancel order fail"),
     ;
 
     private final Long code;

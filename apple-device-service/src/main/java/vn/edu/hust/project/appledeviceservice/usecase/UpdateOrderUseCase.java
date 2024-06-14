@@ -20,6 +20,7 @@ public class UpdateOrderUseCase {
 
     private final IOrderPort orderPort;
     private final IOrderLinePort orderLinePort;
+    private final CancelOrderUseCase cancelOrderUseCase;
 
     @Transactional(rollbackFor = Exception.class)
     public OrderEntity confirmOrder(Long orderId) {
@@ -37,12 +38,16 @@ public class UpdateOrderUseCase {
         if (ObjectUtils.isEmpty(order) || !isStateValid(state, order.getState())) {
             throw new UpdateOrderException();
         }
-
-        order.setState(state);
-        order =  orderPort.save(order);
+        if(OrderState.CANCELLED.name().equals(state)){
+            cancelOrderUseCase.cancelOrder(orderId, order);
+            order.setState(state);
+        }
+        else {
+            order.setState(state);
+            order =  orderPort.save(order);
+        }
         var orderLines = orderLinePort.getOrderLineByOrderIds(List.of(orderId));
         order.setOrderLines(orderLines);
-
         return order;
     }
 
