@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface IOrderLinePort {
     List<OrderLineEntity> getOrderLineByOrderIds(List<Long> orderIds);
+
+    OrderLineEntity save(OrderLineEntity orderLineEntity);
+
 }

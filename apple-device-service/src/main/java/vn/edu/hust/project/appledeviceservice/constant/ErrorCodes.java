@@ -67,6 +67,18 @@ public enum ErrorCodes {
     CREATE_SHIPPING_INFO_FAIL(4000029L, "Create shipping info fail"),
 
     GET_SHIPPING_INFO_NOT_FOUND(4000030L, "Get shipping info not found"),
+
+    CREATE_ORDER_FAIL(4000031L, "Create order fail"),
+
+    CREATE_ORDER_LINE_FAIL(4000032L, "Create order line fail"),
+
+    REDIS_CONNECTION_FAIL(4000033L, "Redis connection fail"),
+
+    CHANGE_INVENTORY_FAIL(4000034L, "Change inventory fail"),
+
+    NOT_ENOUGH_INVENTORY(4000035L, "Not enough inventory"),
+
+    UPDATE_ORDER_FAIL(4000036L, "Update order fail"),
     ;
 
     private final Long code;

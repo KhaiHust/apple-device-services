@@ -43,4 +43,10 @@ public class GetOrderUseCase {
         return Pair.of(result.getFirst(), orders);
     }
 
+    public OrderEntity getOrderById(Long orderId) {
+        var order = orderPort.getOrderById(orderId);
+        var orderLines = getOrderLineUseCase.getOrderLineByOrderId(orderId);
+        order.setOrderLines(orderLines);
+        return order;
+    }
 }

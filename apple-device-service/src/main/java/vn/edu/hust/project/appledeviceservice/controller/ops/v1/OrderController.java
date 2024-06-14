@@ -1,14 +1,12 @@
-package vn.edu.hust.project.appledeviceservice.controller.web.v1;
+package vn.edu.hust.project.appledeviceservice.controller.ops.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateOrderRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetOrderRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.MetaDataWithTotalRecord;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
@@ -16,9 +14,9 @@ import vn.edu.hust.project.appledeviceservice.service.IOrderService;
 import vn.edu.hust.project.appledeviceservice.service.IUserSecurityService;
 
 @RestController
-@RequestMapping("/web/api/v1/orders")
+@RequestMapping("/ops/api/v1/orders")
 @RequiredArgsConstructor
-public class OrderWebController {
+public class OrderController {
     private final IOrderService orderService;
 
     private final IUserSecurityService userSecurityService;
@@ -30,13 +28,13 @@ public class OrderWebController {
     public ResponseEntity<Resource> getAllOrder(
             @RequestParam(defaultValue = DEFAULT_PAGE, name = "page") Long page,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE, name = "page_size") Long pageSize,
-            @RequestParam(required = false, name = "status") String status
+            @RequestParam(required = false, name = "state") String state
     ) {
         var filter = new GetOrderRequest();
         filter.setPage(page);
         filter.setPageSize(pageSize);
-        filter.setState(status);
-        filter.setUserId(userSecurityService.getUserId());
+        filter.setState(state);
+
 
         var result = orderService.getAllOrder(filter);
         var pageInfo = result.getFirst();
@@ -48,14 +46,12 @@ public class OrderWebController {
 
         return ResponseEntity.ok(resource);
     }
-
-    @PostMapping
-    public ResponseEntity<Resource> createOrder(
-        @RequestBody CreateOrderRequest request
+    @PatchMapping()
+    public ResponseEntity<Resource> confirmOrder(
+            @RequestParam(name = "order_id") Long orderId,
+            @RequestParam(name = "state") String state
     ) {
-        request.setUserId(userSecurityService.getUserId());
-        return ResponseEntity.ok(new Resource(orderService.createOrder(request)));
+        return ResponseEntity.ok(new Resource(orderService.updateStateOrder(orderId, state)));
     }
-
 
 }
