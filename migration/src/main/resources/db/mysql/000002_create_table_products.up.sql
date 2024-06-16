@@ -4,7 +4,7 @@ CREATE TABLE `products` (
                             code VARCHAR(20) NOT NULL,
                             description TEXT,
                             banner_img TEXT NOT NULL,
-                            status VARCHAR(10),
+                            status VARCHAR(10) NOT NULL,
                             warranty_duration BIGINT NOT NULL,
                             type_id int NOT NULL,
                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -3,8 +3,8 @@ CREATE TABLE `product_details` (
                                    `product_id` int,
                                    `color_id` int,
                                    `storage_id` int,
-                                   `unit_price` float,
-                                   `price` float,
+                                   `unit_price` float NOT NULL,
+                                   `price` float NOT NULL,
                                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB CHARSET=utf8;
@@ -19,8 +19,8 @@ CREATE TABLE `image_details` (
 
 CREATE TABLE `storages` (
                             `id` int PRIMARY KEY AUTO_INCREMENT,
-                            `volumne` int,
-                            `unit` varchar(50),
+                            `volumne` int NOT NULL ,
+                            `unit` varchar(50) NOT NULL,
                             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB CHARSET=utf8;
@@ -41,3 +41,6 @@ ALTER TABLE `product_details` ADD FOREIGN KEY (`color_id`) REFERENCES `colors` (
 ALTER TABLE `product_details` ADD FOREIGN KEY (`storage_id`) REFERENCES `storages` (`id`);
 
 ALTER TABLE `image_details` ADD FOREIGN KEY (`product_detail_id`) REFERENCES `product_details` (`id`);
+
+ALTER TABLE `storages`
+    ADD CONSTRAINT `unique_volumne_unit` UNIQUE (`volumne`, `unit`);
