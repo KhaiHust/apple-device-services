@@ -85,6 +85,8 @@ public enum ErrorCodes {
     UPDATE_USER_FAIL(4000038L, "Update user fail"),
 
     CREATE_BLOG_FAIL(4000039L, "Create blog fail"),
+
+    GET_BLOG_NOT_FOUND(4000040L, "Get blog not found"),
     ;
 
     private final Long code;
