@@ -100,8 +100,8 @@ app:
             - MODERATOR
         - urlPattern: /ops/api/v1/orders/*
           roles:
-                - ADMIN
-                - MODERATOR
+            - ADMIN
+            - MODERATOR
         - urlPattern: /ops/api/v1/orders/states/*
           roles:
             - MODERATOR

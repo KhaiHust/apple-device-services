@@ -18,4 +18,8 @@ public interface IOrderService {
     OrderEntity updateStateOrderOps(Long orderId, String state);
 
     void cancelOrderWeb(Long orderId, Long userId);
+
+    OrderEntity getById(Long orderId);
+
+    OrderEntity getOrderByIdAndUserID(Long orderId, Long userId);
 }

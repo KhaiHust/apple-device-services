@@ -51,4 +51,14 @@ public class OrderService implements IOrderService {
     public void cancelOrderWeb(Long orderId, Long userId) {
         cancelOrderUseCase.cancelOrderWeb(orderId, userId);
     }
+
+    @Override
+    public OrderEntity getById(Long orderId) {
+        return getOrderUseCase.getOrderById(orderId);
+    }
+
+    @Override
+    public OrderEntity getOrderByIdAndUserID(Long orderId, Long userId) {
+        return getOrderUseCase.getOrderByIdAndUserID(orderId, userId);
+    }
 }

@@ -10,4 +10,6 @@ public interface IShippingInfoPort {
     ShippingInfoEntity getInfoByUserIdAndId(Long userId, Long id);
 
     List<ShippingInfoEntity> getInfoByIds(List<Long> ids);
+
+    ShippingInfoEntity getShippingInfoById(Long id);
 }

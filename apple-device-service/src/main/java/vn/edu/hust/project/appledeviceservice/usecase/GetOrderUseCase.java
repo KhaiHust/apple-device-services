@@ -72,22 +72,32 @@ public class GetOrderUseCase {
         }).toList();
 
 
-
         return Pair.of(result.getFirst(), orders);
     }
 
     public OrderEntity getOrderById(Long orderId) {
         var order = orderPort.getOrderById(orderId);
         var orderLines = getOrderLineUseCase.getOrderLineByOrderId(orderId);
+        var shippingInfo = shippingInfoPort.getShippingInfoById(order.getShippingInfoId());
         order.setOrderLines(orderLines);
+        order.setShippingInfo(shippingInfo);
         return order;
     }
 
-    public List<OrderEntity> getAll(GetOrderRequest filter){
+    public OrderEntity getOrderByIdAndUserID(Long orderId, Long userId) {
+        var order = orderPort.getOrderByIdAndUserId(orderId, userId);
+        var orderLines = getOrderLineUseCase.getOrderLineByOrderId(orderId);
+        var shippingInfo = shippingInfoPort.getShippingInfoById(order.getShippingInfoId());
+        order.setOrderLines(orderLines);
+        order.setShippingInfo(shippingInfo);
+        return order;
+    }
+
+    public List<OrderEntity> getAll(GetOrderRequest filter) {
         return orderPort.getAll(filter);
     }
 
-    public OrderEntity getOrderByCode(String orderCode){
+    public OrderEntity getOrderByCode(String orderCode) {
         return orderPort.getOrderByCode(orderCode);
     }
 }

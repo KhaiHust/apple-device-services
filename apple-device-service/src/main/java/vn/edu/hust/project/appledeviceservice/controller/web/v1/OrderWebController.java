@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +53,7 @@ public class OrderWebController {
 
     @PostMapping
     public ResponseEntity<Resource> createOrder(
-        @RequestBody CreateOrderRequest request
+            @RequestBody CreateOrderRequest request
     ) {
         request.setUserId(userSecurityService.getUserId());
         return ResponseEntity.ok(new Resource(orderService.createOrder(request)));
@@ -64,6 +65,14 @@ public class OrderWebController {
     ) {
         orderService.cancelOrderWeb(orderId, userSecurityService.getUserId());
         return ResponseEntity.ok(new Resource(null));
+    }
+
+    @GetMapping("/{order_id}")
+    public ResponseEntity<Resource> getOrderDetail(
+            @PathVariable(name = "order_id") Long orderId
+    ) {
+
+        return ResponseEntity.ok(new Resource(orderService.getOrderByIdAndUserID(orderId, userSecurityService.getUserId())));
     }
 
 }

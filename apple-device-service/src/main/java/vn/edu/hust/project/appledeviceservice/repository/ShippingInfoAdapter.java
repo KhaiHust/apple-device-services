@@ -39,4 +39,10 @@ public class ShippingInfoAdapter implements IShippingInfoPort {
     public List<ShippingInfoEntity> getInfoByIds(List<Long> ids) {
         return ShippingInfoModelMapper.INSTANCE.toEntityList(shippingInfoRepository.findByIdIn(ids));
     }
+
+    @Override
+    public ShippingInfoEntity getShippingInfoById(Long id) {
+        return ShippingInfoModelMapper.INSTANCE.toEntity(
+                shippingInfoRepository.findById(id).orElseThrow(GetShippingInfoException::new));
+    }
 }

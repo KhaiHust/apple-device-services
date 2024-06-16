@@ -19,4 +19,5 @@ public interface IOrderPort {
     List<OrderEntity> getAll(GetOrderRequest request);
 
     OrderEntity getOrderByCode(String orderCode);
+
 }
