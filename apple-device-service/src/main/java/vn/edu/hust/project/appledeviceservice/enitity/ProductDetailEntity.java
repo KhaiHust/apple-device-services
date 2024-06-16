@@ -38,4 +38,6 @@ public class ProductDetailEntity extends BaseEntity {
 
     private InventoryEntity inventory;
 
+    private ProductEntity product;
+
 }

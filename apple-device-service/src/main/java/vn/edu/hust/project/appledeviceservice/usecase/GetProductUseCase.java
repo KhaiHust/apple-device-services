@@ -36,4 +36,8 @@ public class GetProductUseCase {
 
         return product;
     }
+
+    public List<ProductEntity> getProductByIds(List<Long> ids) {
+        return productPort.getProductByIds(ids);
+    }
 }

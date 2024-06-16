@@ -17,4 +17,6 @@ public interface IOrderPort {
     OrderEntity getOrderByIdAndUserId(Long orderId, Long userId);
 
     List<OrderEntity> getAll(GetOrderRequest request);
+
+    OrderEntity getOrderByCode(String orderCode);
 }

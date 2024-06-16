@@ -28,7 +28,7 @@ public class ProductModel extends BaseModel{
     private String status;
 
     @Column(name = "warranty_duration")
-    private String warrantyDuration;
+    private Long warrantyDuration;
 
     @Column(name = "type_id")
     private Long typeId;

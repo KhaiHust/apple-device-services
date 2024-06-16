@@ -49,6 +49,8 @@ app:
           second: GET
         - first: /web/api/v1/blogs/details
           second: GET
+        - first: /web/api/v1/warranties
+          second: GET
       protectedUrls:
         - urlPattern: /ops/api/v1/colors/**
           roles:
@@ -111,6 +113,10 @@ app:
               - ADMIN
               - MODERATOR
         - urlPattern: /ops/api/v1/stats/date/*
+          roles:
+            - ADMIN
+            - MODERATOR
+        - urlPattern: /ops/api/v1/warranties/*
           roles:
             - ADMIN
             - MODERATOR

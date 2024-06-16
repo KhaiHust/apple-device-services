@@ -61,4 +61,11 @@ public class ProductAdapter implements IProductPort {
                 productRepository.findById(id).orElseThrow(GetProductException::new)
         );
     }
+
+    @Override
+    public List<ProductEntity> getProductByIds(List<Long> ids) {
+        return ProductModelMapper.INSTANCE.toEntities(
+                productRepository.findByIdIn(ids)
+        );
+    }
 }

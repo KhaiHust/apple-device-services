@@ -8,6 +8,7 @@ import vn.edu.hust.project.appledeviceservice.constant.ImageTypeEnum;
 import vn.edu.hust.project.appledeviceservice.enitity.ColorEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.InventoryEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.ProductDetailEntity;
+import vn.edu.hust.project.appledeviceservice.enitity.ProductEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.StorageEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetProductDetailRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
@@ -33,6 +34,8 @@ public class GetProductDetailUseCase {
     private final IStoragePort storagePort;
 
     private final IInventoryPort inventoryPort;
+
+    private final GetProductUseCase getProductUseCase;
 
     public Pair<PageInfo, List<ProductDetailEntity>> getAllProductDetails(
             GetProductDetailRequest filter
@@ -62,13 +65,17 @@ public class GetProductDetailUseCase {
         if (CollectionUtils.isEmpty(productDetails)) {
             return List.of();
         }
-
+        var productIds = productDetails.stream().map(ProductDetailEntity::getProductId).toList();
+        var products = getProductUseCase.getProductByIds(productIds);
+        var productMap =
+                products.stream().collect(Collectors.toMap(ProductEntity::getId, Function.identity()));
         var colorIds = productDetails.stream().map(ProductDetailEntity::getColorId).toList();
         if (CollectionUtils.isEmpty(colorIds)) {
             return List.of();
         }
         var colors = colorPort.findByIds(colorIds);
-        var colorMap = colors.stream().collect(Collectors.toMap(ColorEntity::getId, Function.identity()));
+        var colorMap =
+                colors.stream().collect(Collectors.toMap(ColorEntity::getId, Function.identity()));
 
         var storageIds = productDetails.stream().map(ProductDetailEntity::getStorageId).toList();
         if (CollectionUtils.isEmpty(storageIds)) {
@@ -82,6 +89,10 @@ public class GetProductDetailUseCase {
 
         return productDetails.stream().peek(
                 productDetail -> {
+                    var product = productMap.get(productDetail.getProductId());
+                    if (product != null) {
+                        productDetail.setProduct(product);
+                    }
                     var color = colorMap.get(productDetail.getColorId());
                     if (color != null) {
                         productDetail.setColor(color);
@@ -98,6 +109,7 @@ public class GetProductDetailUseCase {
                         inventory.setSold(null);
                         productDetail.setInventory(inventory);
                     }
+
                 }
         ).collect(Collectors.toList());
 

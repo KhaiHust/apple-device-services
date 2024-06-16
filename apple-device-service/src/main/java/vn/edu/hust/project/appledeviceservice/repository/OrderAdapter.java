@@ -11,6 +11,7 @@ import vn.edu.hust.project.appledeviceservice.enitity.OrderEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetOrderRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.PageInfo;
 import vn.edu.hust.project.appledeviceservice.exception.CreateOrderException;
+import vn.edu.hust.project.appledeviceservice.exception.GetOrderException;
 import vn.edu.hust.project.appledeviceservice.port.IOrderPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IOrderRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.OrderModelMapper;
@@ -64,5 +65,15 @@ public class OrderAdapter implements IOrderPort {
     @Override
     public List<OrderEntity> getAll(GetOrderRequest filter) {
         return OrderModelMapper.INSTANCE.toEntities(orderRepository.findAll(new OrderSpecification(filter)));
+    }
+
+    @Override
+    public OrderEntity getOrderByCode(String orderCode) {
+        return OrderModelMapper.INSTANCE.toEntity(orderRepository.findByCode(orderCode).orElseThrow(
+                () -> {
+                    log.error("[OrderAdapter] Can not find order by code: " + orderCode);
+                    return new GetOrderException();
+                }
+        ));
     }
 }

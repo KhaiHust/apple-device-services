@@ -87,6 +87,12 @@ public enum ErrorCodes {
     CREATE_BLOG_FAIL(4000039L, "Create blog fail"),
 
     GET_BLOG_NOT_FOUND(4000040L, "Get blog not found"),
+
+    GET_ORDER_NOT_FOUND(4000041L, "Get order not found"),
+
+    GET_WARRANTY_NOT_FOUND(4000042L, "Get warranty not found"),
+
+    GET_STATISTIC_FAIL(4000043L, "Get statistic fail"),
     ;
 
     private final Long code;

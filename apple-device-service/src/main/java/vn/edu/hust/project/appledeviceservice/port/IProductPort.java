@@ -13,4 +13,7 @@ public interface IProductPort {
     Pair<PageInfo, List<ProductEntity>> getAllProducts(GetProductRequest request);
 
     ProductEntity getProductById(Long id);
+
+    List<ProductEntity> getProductByIds(List<Long> ids);
+
 }

@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface IOrderRepository extends JpaRepository<OrderModel, Long>, JpaSpecificationExecutor<OrderModel> {
 
     Optional<OrderModel> findByIdAndUserId(Long orderId, Long userId);
+
+     Optional<OrderModel> findByCode(String code);
 }

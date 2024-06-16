@@ -86,4 +86,8 @@ public class GetOrderUseCase {
     public List<OrderEntity> getAll(GetOrderRequest filter){
         return orderPort.getAll(filter);
     }
+
+    public OrderEntity getOrderByCode(String orderCode){
+        return orderPort.getOrderByCode(orderCode);
+    }
 }
