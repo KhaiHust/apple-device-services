@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateBlogRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetBlogRequest;
-import vn.edu.hust.project.appledeviceservice.enitity.dto.request.GetColorRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.UpdateBlogRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.MetaDataWithTotalRecord;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.response.Resource;
