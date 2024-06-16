@@ -16,6 +16,6 @@ import lombok.Setter;
 public class CreateOrderRequest {
     private String paymentMethod;
     private Long userId;
-    private List<OrderLineRequest> orderLines;
     private CreateShippingInfoRequest shippingInfo;
+    private List<Long> cartIds;
 }

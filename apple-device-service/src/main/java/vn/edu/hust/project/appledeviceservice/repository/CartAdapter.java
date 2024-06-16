@@ -69,4 +69,21 @@ public class CartAdapter implements ICartPort {
         }
 
     }
+
+    @Override
+    public void deleteCartByIds(List<Long> cartIds) {
+        try {
+            cartRepository.deleteByIdIn(cartIds);
+        } catch (Exception e) {
+            log.error("[CartAdapter] delete cart error: {}", e.getMessage());
+            throw new DeleteCartException();
+        }
+    }
+
+    @Override
+    public List<CartEntity> getCartByIds(List<Long> cartIds) {
+        return CartModelMapper.INSTANCE.toEntities(
+                cartRepository.findByIdIn(cartIds)
+        );
+    }
 }

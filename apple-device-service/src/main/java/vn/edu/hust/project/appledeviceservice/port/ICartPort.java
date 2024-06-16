@@ -16,4 +16,8 @@ public interface ICartPort {
     CartEntity getCartByIdAndUserId(Long id, Long userId);
 
     void deleteCart(Long id);
+
+    void deleteCartByIds(List<Long> cartIds);
+
+    List<CartEntity> getCartByIds(List<Long> cartIds);
 }

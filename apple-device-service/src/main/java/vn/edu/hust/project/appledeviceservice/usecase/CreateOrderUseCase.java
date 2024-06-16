@@ -36,11 +36,14 @@ public class CreateOrderUseCase {
     private final IProductDetailPort productDetailPort;
     private final ChangeInventoryUseCase changeInventoryUseCase;
     private final CreateShippingInfoUseCase createShippingInfoUseCase;
+    private final DeleteCartUseCase deleteCartUseCase;
+    private final GetCartUseCase getCartUseCase;
 
 
     @Transactional(rollbackFor = Exception.class)
     public OrderEntity createOrder(CreateOrderRequest createOrderRequest) {
         try {
+
             if (createOrderRequest == null) {
                 log.error("[CreateOrderUseCase] Create order request is null");
                 throw new CreateOrderException();
@@ -49,11 +52,36 @@ public class CreateOrderUseCase {
                 log.error("[CreateOrderUseCase] Shipping info is null");
                 throw new CreateOrderException();
             }
+
+            if (CollectionUtils.isEmpty(createOrderRequest.getCartIds())) {
+                log.error("[CreateOrderUseCase] Cart ids is empty");
+                throw new CreateOrderException();
+            }
+
+
             var shippingInfoRequest = createOrderRequest.getShippingInfo();
             var shippingInfo = createShippingInfoUseCase.createShippingInfo(shippingInfoRequest);
 
+            var carts = getCartUseCase.getCartsByIds(createOrderRequest.getCartIds());
+            if (CollectionUtils.isEmpty(carts)) {
+                log.error("[CreateOrderUseCase] Carts is empty");
+                throw new CreateOrderException();
+            }
 
-            var orderLines = createOrderRequest.getOrderLines();
+
+            var orderLines = carts.stream()
+                    .map(cart -> {
+                        var orderLine = new OrderLineEntity();
+                        orderLine.setProductDetailId(cart.getProductDetailId());
+                        orderLine.setQuantity(cart.getQuantity());
+                        return orderLine;
+                    })
+                    .toList();
+            if (CollectionUtils.isEmpty(orderLines)) {
+                log.error("[CreateOrderUseCase] Order lines is empty");
+                throw new CreateOrderException();
+            }
+
             var productDetailIds = orderLines.stream()
                     .map(orderLine -> orderLine.getProductDetailId())
                     .collect(Collectors.toList());
@@ -62,10 +90,7 @@ public class CreateOrderUseCase {
             var totalPrice = productDetails.stream()
                     .mapToLong(productDetail -> productDetail.getPrice())
                     .sum();
-            if (CollectionUtils.isEmpty(orderLines)) {
-                log.error("[CreateOrderUseCase] Order lines is empty");
-                throw new CreateOrderException();
-            }
+
 
             var order = OrderResourceMapper.INSTANCE.createOrderFromRequest(createOrderRequest);
 
@@ -109,6 +134,7 @@ public class CreateOrderUseCase {
                     }
                 }
             }
+            deleteCartUseCase.deleteCartByIds(createOrderRequest.getCartIds());
             order.setOrderLines(orderLineEntities);
             order.setShippingInfo(shippingInfo);
             return order;

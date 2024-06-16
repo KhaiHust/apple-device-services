@@ -42,4 +42,8 @@ public class GetCartUseCase {
                 }
         ).toList();
     }
+
+    public List<CartEntity> getCartsByIds(List<Long> cartIds) {
+        return cartPort.getCartByIds(cartIds);
+    }
 }

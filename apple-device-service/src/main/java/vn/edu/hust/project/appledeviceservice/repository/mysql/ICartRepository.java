@@ -15,4 +15,8 @@ public interface ICartRepository extends IBaseRepository<CartModel> {
     Optional<CartModel> findByIdAndUserId(Long id, Long userId);
 
     Optional<CartModel> findByUserIdAndProductDetailId(Long userId, Long productDetailId);
+
+    void deleteByIdIn(List<Long> cartIds);
+
+    List<CartModel> findByIdIn(List<Long> cartIds);
 }

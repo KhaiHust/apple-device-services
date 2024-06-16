@@ -46,7 +46,14 @@ public class CartService implements ICartService {
 
         var carts =  getCartUseCase.getCartByUserId(userId);
         var total = carts.stream().mapToLong(CartEntity::getQuantity).sum();
-        return new CartResponse(total, carts);
+        var totalPrice = carts.stream().mapToLong(cart -> {
+            if(cart.getProductDetail() != null) {
+                return cart.getProductDetail().getPrice() * cart.getQuantity();
+            }
+            return 0;
+
+        }).sum();
+        return new CartResponse(total, carts, totalPrice);
     }
 
     @Transactional(rollbackFor = Exception.class)

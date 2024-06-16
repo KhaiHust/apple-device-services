@@ -15,4 +15,5 @@ import java.util.List;
 public class CartResponse {
     private Long total;
     private List<CartEntity> carts;
+    private Long totalPrice;
 }
