@@ -3,9 +3,7 @@ package vn.edu.hust.project.appledeviceservice.usecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import vn.edu.hust.project.appledeviceservice.constant.RoleEnum;
 import vn.edu.hust.project.appledeviceservice.enitity.UserEntity;
-import vn.edu.hust.project.appledeviceservice.exception.UpdateUserException;
 import vn.edu.hust.project.appledeviceservice.port.IRolePort;
 import vn.edu.hust.project.appledeviceservice.port.IUserPort;
 
