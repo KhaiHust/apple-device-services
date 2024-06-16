@@ -24,6 +24,8 @@ public class GetCartUseCase {
             return List.of();
         }
 
+        carts = carts.stream().filter(cart -> cart.getQuantity() > 0).toList();
+
         var productDetailIds = carts.stream()
                 .map(CartEntity::getProductDetailId)
                 .toList();

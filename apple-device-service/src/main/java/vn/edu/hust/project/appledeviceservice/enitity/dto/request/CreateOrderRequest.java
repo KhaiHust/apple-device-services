@@ -15,7 +15,7 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CreateOrderRequest {
     private String paymentMethod;
-    private Long shippingInfoId;
     private Long userId;
     private List<OrderLineRequest> orderLines;
+    private CreateShippingInfoRequest shippingInfo;
 }

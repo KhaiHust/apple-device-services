@@ -17,7 +17,6 @@ import vn.edu.hust.project.appledeviceservice.exception.CreateOrderException;
 import vn.edu.hust.project.appledeviceservice.exception.NotEnoughInventoryException;
 import vn.edu.hust.project.appledeviceservice.exception.RedisConnectException;
 import vn.edu.hust.project.appledeviceservice.mapper.OrderResourceMapper;
-import vn.edu.hust.project.appledeviceservice.port.IInventoryPort;
 import vn.edu.hust.project.appledeviceservice.port.IOrderLinePort;
 import vn.edu.hust.project.appledeviceservice.port.IOrderPort;
 import vn.edu.hust.project.appledeviceservice.port.IProductDetailPort;
@@ -32,15 +31,28 @@ import java.util.stream.Collectors;
 public class CreateOrderUseCase {
 
     private final IOrderPort orderPort;
-    private final IInventoryPort inventoryPort;
     private final IRedisPort redisPort;
     private final IOrderLinePort orderLinePort;
     private final IProductDetailPort productDetailPort;
     private final ChangeInventoryUseCase changeInventoryUseCase;
+    private final CreateShippingInfoUseCase createShippingInfoUseCase;
+
 
     @Transactional(rollbackFor = Exception.class)
     public OrderEntity createOrder(CreateOrderRequest createOrderRequest) {
         try {
+            if (createOrderRequest == null) {
+                log.error("[CreateOrderUseCase] Create order request is null");
+                throw new CreateOrderException();
+            }
+            if (createOrderRequest.getShippingInfo() == null) {
+                log.error("[CreateOrderUseCase] Shipping info is null");
+                throw new CreateOrderException();
+            }
+            var shippingInfoRequest = createOrderRequest.getShippingInfo();
+            var shippingInfo = createShippingInfoUseCase.createShippingInfo(shippingInfoRequest);
+
+
             var orderLines = createOrderRequest.getOrderLines();
             var productDetailIds = orderLines.stream()
                     .map(orderLine -> orderLine.getProductDetailId())
@@ -56,6 +68,8 @@ public class CreateOrderUseCase {
             }
 
             var order = OrderResourceMapper.INSTANCE.createOrderFromRequest(createOrderRequest);
+
+            order.setShippingInfoId(shippingInfo.getId());
             order.setState(OrderState.PENDING.name());
             order.setTotalPrice(totalPrice);
             order = orderPort.save(order);
@@ -96,6 +110,7 @@ public class CreateOrderUseCase {
                 }
             }
             order.setOrderLines(orderLineEntities);
+            order.setShippingInfo(shippingInfo);
             return order;
         } catch (ChangeInventoryException ex) {
             throw new NotEnoughInventoryException();

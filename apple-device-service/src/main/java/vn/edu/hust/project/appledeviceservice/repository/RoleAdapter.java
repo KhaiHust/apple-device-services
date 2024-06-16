@@ -27,4 +27,16 @@ public class RoleAdapter implements IRolePort {
                 )
         );
     }
+
+    @Override
+    public RoleEntity getRoleByCode(String code) {
+        return RoleModelMapper.INSTANCE.toRoleEntity(
+                roleRepository.findByCode(code).orElseThrow(
+                        () -> {
+                            log.error("[RoleAdapter] Can not find role by code : " + code);
+                            return new GetRoleException();
+                        }
+                )
+        );
+    }
 }

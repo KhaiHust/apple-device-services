@@ -81,6 +81,8 @@ public enum ErrorCodes {
     UPDATE_ORDER_FAIL(4000036L, "Update order fail"),
 
     CANCEL_ORDER_FAIL(4000037L, "Cancel order fail"),
+
+    UPDATE_USER_FAIL(4000038L, "Update user fail"),
     ;
 
     private final Long code;

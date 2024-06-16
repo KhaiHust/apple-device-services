@@ -27,6 +27,8 @@ public class UpdateCartUseCase {
         var productDetail = productDetailPort.getProductDetail(request.getProductDetailId());
         existedCart.setProductDetail(productDetail);
         existedCart.setQuantity(request.getNewQuantity());
-        return cartPort.save(existedCart);
+        existedCart =  cartPort.save(existedCart);
+        existedCart.setProductDetail(productDetail);
+        return existedCart;
     }
 }

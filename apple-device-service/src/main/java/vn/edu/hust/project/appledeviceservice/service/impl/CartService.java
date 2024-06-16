@@ -7,6 +7,7 @@ import org.springframework.util.ObjectUtils;
 import vn.edu.hust.project.appledeviceservice.enitity.CartEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateCartRequest;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.UpdateCartRequest;
+import vn.edu.hust.project.appledeviceservice.enitity.dto.response.CartResponse;
 import vn.edu.hust.project.appledeviceservice.exception.CreateCartException;
 import vn.edu.hust.project.appledeviceservice.exception.UpdateCartException;
 import vn.edu.hust.project.appledeviceservice.port.IInventoryPort;
@@ -41,8 +42,11 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public List<CartEntity> getCartByUserId(Long userId) {
-        return getCartUseCase.getCartByUserId(userId);
+    public CartResponse getCartByUserId(Long userId) {
+
+        var carts =  getCartUseCase.getCartByUserId(userId);
+        var total = carts.stream().mapToLong(CartEntity::getQuantity).sum();
+        return new CartResponse(total, carts);
     }
 
     @Transactional(rollbackFor = Exception.class)
