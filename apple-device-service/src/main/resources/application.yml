@@ -102,5 +102,15 @@ app:
                 - MODERATOR
         - urlPattern: /ops/api/v1/orders/states/*
           roles:
+            - MODERATOR
+        - urlPattern: /ops/api/v1/stats/all/*
+          roles:
+            - ADMIN
+        - urlPattern: /ops/api/v1/blogs/*
+          roles:
+              - ADMIN
+              - MODERATOR
+        - urlPattern: /ops/api/v1/stats/date/*
+          roles:
             - ADMIN
             - MODERATOR

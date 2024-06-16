@@ -60,4 +60,9 @@ public class OrderAdapter implements IOrderPort {
     public OrderEntity getOrderByIdAndUserId(Long orderId, Long userId) {
         return OrderModelMapper.INSTANCE.toEntity(orderRepository.findByIdAndUserId(orderId, userId).orElse(null));
     }
+
+    @Override
+    public List<OrderEntity> getAll(GetOrderRequest filter) {
+        return OrderModelMapper.INSTANCE.toEntities(orderRepository.findAll(new OrderSpecification(filter)));
+    }
 }

@@ -25,6 +25,12 @@ public class OrderSpecification implements Specification<OrderModel> {
         if(filter.getState() != null) {
             predicates.add(cb.equal(root.get("state"), filter.getState()));
         }
+        if(filter.getOrderDateFrom() != null) {
+            predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), filter.getOrderDateFrom()));
+        }
+        if(filter.getOrderDateTo() != null) {
+            predicates.add(cb.lessThanOrEqualTo(root.get("createdAt"), filter.getOrderDateTo()));
+        }
 
         return cb.and(predicates.toArray(new Predicate[0]));
     }

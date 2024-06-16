@@ -82,4 +82,8 @@ public class GetOrderUseCase {
         order.setOrderLines(orderLines);
         return order;
     }
+
+    public List<OrderEntity> getAll(GetOrderRequest filter){
+        return orderPort.getAll(filter);
+    }
 }

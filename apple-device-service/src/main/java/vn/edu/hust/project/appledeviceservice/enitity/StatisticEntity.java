@@ -7,23 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class OrderEntity extends BaseEntity{
-    private Long userId;
-    private String code;
-    private String state;
-    private String paymentMethod;
-    private String paymentState;
+public class StatisticEntity {
+    private Long totalOrder;
+    private Long totalSoldProduct;
     private Long totalPrice;
-    private Long shippingInfoId;
-    List<OrderLineEntity> orderLines;
-    private Long createdAt;
-    private Long updatedAt;
-    private ShippingInfoEntity shippingInfo;
+
 }
