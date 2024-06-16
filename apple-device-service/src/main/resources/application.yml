@@ -45,6 +45,10 @@ app:
           second: POST
         - first: /web/api/v1/auth/login
           second: POST
+        - first: /web/api/v1/blogs
+          second: GET
+        - first: /web/api/v1/blogs/details
+          second: GET
       protectedUrls:
         - urlPattern: /ops/api/v1/colors/**
           roles:

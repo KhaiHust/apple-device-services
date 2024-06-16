@@ -77,4 +77,10 @@ public class BlogController {
         return ResponseEntity.ok(new Resource(null));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Resource> getBlogById(
+            @PathVariable(name = "id") Long id
+    ) {
+        return ResponseEntity.ok(new Resource(blogService.getBlogById(id)));
+    }
 }

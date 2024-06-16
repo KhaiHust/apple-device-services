@@ -43,4 +43,14 @@ public class BlogService implements IBlogService {
     public void deleteBlog(Long id) {
         deleteBlogUseCase.deleteBlog(id);
     }
+
+    @Override
+    public Pair<PageInfo, List<BlogEntity>> getAllBlogsWeb(GetBlogRequest request) {
+        return getBlogUseCase.getAllWebBlogs(request);
+    }
+
+    @Override
+    public BlogEntity getBlogById(Long id) {
+        return getBlogUseCase.getBlogById(id);
+    }
 }

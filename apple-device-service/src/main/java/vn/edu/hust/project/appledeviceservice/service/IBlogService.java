@@ -17,4 +17,8 @@ public interface IBlogService {
     BlogEntity updateBlog(Long id, UpdateBlogRequest request);
 
     void deleteBlog(Long id);
+
+    Pair<PageInfo, List<BlogEntity>> getAllBlogsWeb(GetBlogRequest request);
+
+    BlogEntity getBlogById(Long id);
 }

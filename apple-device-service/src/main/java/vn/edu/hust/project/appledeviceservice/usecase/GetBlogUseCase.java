@@ -26,4 +26,12 @@ public class GetBlogUseCase {
     public BlogEntity getBlogById(Long id) {
         return blogPort.getBlogById(id);
     }
+
+    public Pair<PageInfo, List<BlogEntity>> getAllWebBlogs(GetBlogRequest filter) {
+        var result = blogPort.getAllBlogs(filter);
+        var blogs = result.getSecond();
+        blogs = blogs.stream().filter(blog -> !BlogStatus.DELETED.name().equalsIgnoreCase(blog.getStatus())).toList();
+        return Pair.of(result.getFirst(), blogs);
+    }
+
 }

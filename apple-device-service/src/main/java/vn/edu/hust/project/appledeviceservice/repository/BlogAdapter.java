@@ -15,6 +15,7 @@ import vn.edu.hust.project.appledeviceservice.exception.GetBlogException;
 import vn.edu.hust.project.appledeviceservice.port.IBlogPort;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.IBlogRepository;
 import vn.edu.hust.project.appledeviceservice.repository.mysql.mapper.BlogModelMapper;
+import vn.edu.hust.project.appledeviceservice.repository.mysql.specification.BlogSpecification;
 import vn.edu.hust.project.appledeviceservice.utils.PageInfoUtils;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class BlogAdapter implements IBlogPort {
     public Pair<PageInfo, List<BlogEntity>> getAllBlogs(GetBlogRequest filter) {
         Pageable pageable = PageRequest.of(Math.toIntExact(filter.getPage()), Math.toIntExact(filter.getPageSize()),
                 Sort.by("id").descending());
-        var result = blogRepository.findAll(pageable);
+        var result = blogRepository.findAll(new BlogSpecification(filter), pageable);
         var pageInfo = PageInfoUtils.getPageInfoUtils(result);
         return Pair.of(pageInfo, BlogModelMapper.INSTANCE.toEntities(result.getContent()));
     }
@@ -50,7 +51,7 @@ public class BlogAdapter implements IBlogPort {
     @Override
     public BlogEntity getBlogById(Long id) {
         return BlogModelMapper.INSTANCE.toEntity(blogRepository.findById(id).orElseThrow(
-                () ->{
+                () -> {
                     log.error("[BlogAdapter] Blog not found, id: " + id);
                     return new GetBlogException();
                 }
