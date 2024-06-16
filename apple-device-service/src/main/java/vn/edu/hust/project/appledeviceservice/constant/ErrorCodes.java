@@ -83,6 +83,8 @@ public enum ErrorCodes {
     CANCEL_ORDER_FAIL(4000037L, "Cancel order fail"),
 
     UPDATE_USER_FAIL(4000038L, "Update user fail"),
+
+    CREATE_BLOG_FAIL(4000039L, "Create blog fail"),
     ;
 
     private final Long code;
