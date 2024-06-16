@@ -17,4 +17,5 @@ public class BlogEntity extends BaseEntity {
     private String content;
     private Long userId;
     private String status;
+    private String bannerImg;
 }

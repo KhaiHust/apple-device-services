@@ -45,8 +45,11 @@
     <changeSet id="000014_create_table_shipping_info.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000014_create_table_shipping_info.up.sql"/>
     </changeSet>
-<changeSet id="000015_create_table_blogs.up" author="khaihust">
+    <changeSet id="000015_create_table_blogs.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000015_create_table_blogs.up.sql"/>
+    </changeSet>
+    <changeSet id="000016_add_column_banner_img_blogs_table.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000016_add_column_banner_img_blogs_table.up.sql"/>
     </changeSet>
 
 </databaseChangeLog>
