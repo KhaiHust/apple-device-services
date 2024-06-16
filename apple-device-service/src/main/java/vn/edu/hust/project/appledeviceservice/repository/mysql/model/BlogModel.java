@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Entity(name = "Blog Model")
 @Table(name = "blogs")
-public class BlogModel extends BaseModel{
+public class BlogModel extends BaseModel {
     @Column(name = "title")
     private String title;
 
@@ -26,4 +26,7 @@ public class BlogModel extends BaseModel{
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "banner_img")
+    private String bannerImg;
 }

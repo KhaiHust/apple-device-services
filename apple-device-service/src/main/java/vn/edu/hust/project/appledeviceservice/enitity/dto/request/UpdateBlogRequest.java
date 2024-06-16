@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class CreateBlogRequest {
+public class UpdateBlogRequest {
     private String title;
     private String content;
     private String status;
