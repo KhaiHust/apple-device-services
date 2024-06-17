@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import vn.edu.hust.project.appledeviceservice.constant.Key;
 import vn.edu.hust.project.appledeviceservice.constant.OrderState;
+import vn.edu.hust.project.appledeviceservice.enitity.BaseEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.OrderLineEntity;
+import vn.edu.hust.project.appledeviceservice.enitity.ProductDetailEntity;
 import vn.edu.hust.project.appledeviceservice.enitity.dto.request.CreateOrderRequest;
 import vn.edu.hust.project.appledeviceservice.exception.ChangeInventoryException;
 import vn.edu.hust.project.appledeviceservice.exception.CreateOrderException;
@@ -23,6 +25,7 @@ import vn.edu.hust.project.appledeviceservice.port.IProductDetailPort;
 import vn.edu.hust.project.appledeviceservice.port.IRedisPort;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,10 +89,14 @@ public class CreateOrderUseCase {
                     .map(orderLine -> orderLine.getProductDetailId())
                     .collect(Collectors.toList());
             var productDetails = productDetailPort.getProductDetailByIds(productDetailIds);
-
-            var totalPrice = productDetails.stream()
-                    .mapToLong(productDetail -> productDetail.getPrice())
-                    .sum();
+            var mapProductDetail = productDetails.stream()
+                    .collect(Collectors.toMap(ProductDetailEntity::getId, Function.identity()));
+            var totalPrice = orderLines.stream()
+                    .map(orderLine -> {
+                        var productDetail = mapProductDetail.get(orderLine.getProductDetailId());
+                        return productDetail.getPrice() * orderLine.getQuantity();
+                    })
+                    .reduce(0L, Long::sum);
 
 
             var order = OrderResourceMapper.INSTANCE.createOrderFromRequest(createOrderRequest);

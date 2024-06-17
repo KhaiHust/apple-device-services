@@ -30,6 +30,8 @@ public class GetOrderUseCase {
 
     private final GetProductDetailUseCase getProductDetailUseCase;
 
+    private final GetShippingInfoUseCase getShippingInfoUseCase;
+
     public Pair<PageInfo, List<OrderEntity>> getAllOrder(GetOrderRequest request) {
 
         var result = orderPort.getAllOrder(request);
@@ -78,7 +80,7 @@ public class GetOrderUseCase {
     public OrderEntity getOrderById(Long orderId) {
         var order = orderPort.getOrderById(orderId);
         var orderLines = getOrderLineUseCase.getOrderLineByOrderId(orderId);
-        var shippingInfo = shippingInfoPort.getShippingInfoById(order.getShippingInfoId());
+        var shippingInfo = getShippingInfoUseCase.getShippingInfoById(order.getShippingInfoId());
         order.setOrderLines(orderLines);
         order.setShippingInfo(shippingInfo);
         return order;
@@ -87,7 +89,7 @@ public class GetOrderUseCase {
     public OrderEntity getOrderByIdAndUserID(Long orderId, Long userId) {
         var order = orderPort.getOrderByIdAndUserId(orderId, userId);
         var orderLines = getOrderLineUseCase.getOrderLineByOrderId(orderId);
-        var shippingInfo = shippingInfoPort.getShippingInfoById(order.getShippingInfoId());
+        var shippingInfo = getShippingInfoUseCase.getShippingInfoById(order.getShippingInfoId());
         order.setOrderLines(orderLines);
         order.setShippingInfo(shippingInfo);
         return order;

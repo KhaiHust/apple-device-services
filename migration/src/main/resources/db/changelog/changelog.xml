@@ -51,5 +51,8 @@
     <changeSet id="000016_add_column_banner_img_blogs_table.up" author="khaihust">
         <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000016_add_column_banner_img_blogs_table.up.sql"/>
     </changeSet>
+    <changeSet id="000017_alter_column_total_price_table_orders.up" author="khaihust">
+        <sqlFile relativeToChangelogFile="true" path="../../db/mysql/000017_alter_column_total_price_table_orders.up.sql"/>
+    </changeSet>
 
 </databaseChangeLog>
